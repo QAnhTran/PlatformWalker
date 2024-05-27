@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/cacman/Start.unity
+    guid: f9c56c1db6de680478dbf1694f553d74
+  - enabled: 1
+    path: Assets/cacman/game 1.unity
+    guid: 234a87a32cc45cd4c8af20f7a5c87515
+  - enabled: 1
+    path: Assets/cacman/game 2.unity
+    guid: 9571b91e648155540b794fa0e762a641
+  - enabled: 1
+    path: Assets/cacman/game 3.unity
+    guid: 4cc5e66a3c2b02141b58a349445a0154
+  - enabled: 1
+    path: Assets/cacman/game 4.unity
+    guid: 5797b745d4558e649829870b77494829
+  - enabled: 1
+    path: Assets/cacman/End.unity
+    guid: 33136441fdfcfdb418655530ba4198a7
+  m_configObjects: {}
