@@ -5,32 +5,35 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider slider;
-    public Image fill;
-    public Image background;
+    public Transform entity; // Reference to the entity the health bar is following
+    public Vector3 offset; // Offset from the entity position
+
+    private RectTransform healthBarRect;
+    private Camera mainCamera;
 
     void Start()
     {
-        // Ensure full opacity for fill and background
-        SetFullOpacity(fill);
-        SetFullOpacity(background);
+        healthBarRect = GetComponent<RectTransform>();
+        mainCamera = Camera.main;
     }
 
-    void SetFullOpacity(Image image)
+    void Update()
     {
-        Color color = image.color;
-        color.a = 1.0f;  // Set alpha to fully opaque
-        image.color = color;
+        if (entity != null)
+        {
+            // Convert the entity's world position to screen position
+      //      Vector3 screenPos = mainCamera.WorldToScreenPoint(entity.position + offset);
+
+            // Update the health bar position
+         //   healthBarRect.position = screenPos;
+        }
     }
 
-    public void SetMaxHealth(int health)
+    public void SetHealth(float health, float maxHealth)
     {
-        slider.maxValue = health;
-        slider.value = health;
-    }
-
-    public void SetHealth(int health)
-    {
-        slider.value = health;
+        // Assume HealthBarFill is a child with an Image component
+        Image healthBarFill = healthBarRect.Find("HealthBarFill").GetComponent<Image>();
+        Debug.Log(!healthBarFill);
+        healthBarFill.fillAmount = health / maxHealth;
     }
 }

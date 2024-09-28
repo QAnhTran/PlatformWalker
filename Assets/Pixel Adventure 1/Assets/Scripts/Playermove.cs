@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviourPun
 {
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -21,10 +23,11 @@ public class PlayerMove : MonoBehaviour
 
     private int atkDamage = 10;
 
-    private enum MovementState { idle, running, jumping, falling, doubleJ  }
+    private enum MovementState { idle, running, jumping, falling, doubleJ }
     private MovementState state = MovementState.idle;
 
     [SerializeField] private AudioSource jumpSoundEffect;
+    private bool raceFinished = false;
 
     private void Start()
     {
@@ -32,10 +35,46 @@ public class PlayerMove : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        if (GameManager.Instance.isMultiplayer)
+        {
+            if (photonView.IsMine)
+            {
+                Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
+                if (cameracontroller != null)
+                {
+                    cameracontroller.Player = transform;
+                }
+            }
+            Debug.Log(photonView.IsMine);
+        }
+        else
+        {
+            // Single-player setup
+            Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
+            if (cameracontroller != null)
+            {
+                cameracontroller.Player = transform;
+            }
+        }
     }
 
     private void Update()
     {
+                if (!raceFinished)
+        {
+            if (GameManager.Instance.isMultiplayer)
+            {
+                if (photonView.IsMine)
+                {
+                    HandleMovement();
+                }
+            }
+            else
+            {
+                HandleMovement();
+            }
+        }
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
@@ -45,18 +84,31 @@ public class PlayerMove : MonoBehaviour
             {
                 Jump(jumpForce);
                 canDoubleJump = true; // Reset double jump ability if grounded
-                isDoubleJumping = false; 
+                isDoubleJumping = false;
             }
             else if (canDoubleJump) // Check if double jump is allowed
             {
                 Jump(doubleJumpForce); // Use double jump force
                 canDoubleJump = false; // Prevent further double jumps until grounded again
-                isDoubleJumping = true; 
+                isDoubleJumping = true;
             }
+        }
+
+        if (photonView.IsMine)
+        {
+            float move = Input.GetAxis("Horizontal");
+            transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
         }
 
         UpdateAnimationState();
     }
+
+        void HandleMovement()
+    {
+        float move = Input.GetAxis("Horizontal");
+        transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
+    }
+
 
     private void UpdateAnimationState()
     {
@@ -90,7 +142,7 @@ public class PlayerMove : MonoBehaviour
         {
             state = MovementState.jumping;
         }
-      
+
         anim.SetInteger("state", (int)state);
     }
 
@@ -116,4 +168,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
+
+
 }

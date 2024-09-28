@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cherry
   - Trap
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Enemy HP
   - 
   - 
   - 
@@ -51,4 +52,7 @@ TagManager:
     locked: 0
   - name: player
     uniqueID: 1398856101
+    locked: 0
+  - name: Enemy HP
+    uniqueID: 3808837741
     locked: 0
