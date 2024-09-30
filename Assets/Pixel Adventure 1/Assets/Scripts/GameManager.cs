@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance { get; private set; }
-    public Transform[] spawnPoints; // Array of spawn points for players
-    public GameObject playerPrefab; // Player prefab to instantiate
-    public bool isMultiplayer; // Determine if the game is in multiplayer mode
+    public Transform[] spawnPoints; 
+    public GameObject playerPrefab; 
+    public bool isMultiplayer; 
 
-    private bool playerInstantiated = false; // Flag to prevent multiple player instances
+    private bool playerInstantiated = false; 
 
 
     void Awake()
@@ -18,21 +19,22 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Preserve across scenes
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            Destroy(gameObject); 
         }
     }
     void Start()
     {
         Debug.Log("GameManager Start called");
 
-        if (playerInstantiated) 
+
+        if (playerInstantiated)
         {
             Debug.Log("Player already instantiated, skipping spawn");
-            return; // Ensure only one player is spawned
+            return; 
         }
 
         if (playerPrefab == null)
@@ -47,7 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        // Choose a random spawn point for the player
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Debug.Log($"Selected spawn point: {spawnPoint.position}");
 
@@ -55,11 +56,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsConnectedAndReady)
             {
-                // Instantiate the player via Photon for multiplayer
                 Debug.Log("Instantiating player for multiplayer");
                 GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
 
-                // Set the camera to follow the player
                 SetCameraFollow(player);
             }
             else
@@ -69,11 +68,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            // Single-player mode instantiation
             Debug.Log("Instantiating player for single-player");
             GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
-            // Set the camera to follow the player
             SetCameraFollow(player);
         }
 
@@ -93,4 +90,5 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError("CameraFollowPlayer script not found on the Main Camera.");
         }
     }
+
 }
