@@ -9,15 +9,17 @@ public class InventoryManager : MonoBehaviour
     public List<Item> inventoryItems = new List<Item>(); // List of items in the inventory
     public Transform inventoryUI; // Reference to the UI grid
     public GameObject itemSlotPrefab; // Prefab for each item slot
+    public GameObject[] inventorySlots;
     public int itemsPerPage = 9;
     public Transform inventoryGrid;
     public Button inventoryButton;
+    public GameObject selectedItem;
+    
 
     private int currentPage = 0;
 
     private void Awake()
     {
-        // Ensure only one instance of the InventoryManager exists
         if (Instance == null)
         {
             Instance = this;
@@ -33,15 +35,13 @@ public class InventoryManager : MonoBehaviour
         DisplayPage(currentPage);
     }
 
-    // Function to display the items for the current page
     void DisplayPage(int page)
     {
-        ClearInventoryUI(); // Clear current UI slots
+        ClearInventoryUI(); 
 
         int startItemIndex = page * itemsPerPage;
         int endItemIndex = Mathf.Min(startItemIndex + itemsPerPage, inventoryItems.Count);
 
-        // Display items for the current page
         for (int i = startItemIndex; i < endItemIndex; i++)
         {
             GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryUI);
@@ -49,21 +49,73 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Function to add a new item to the inventory
+    void CreateInventoryTiles()
+    {
+        for (int i = 0; i < itemsPerPage; i++)
+        {
+            GameObject tile = Instantiate(itemSlotPrefab, transform);
+        }
+    }
+
     public void AddItem(Item newItem)
     {
-        // Instantiate the item slot prefab into the inventory grid
         GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryGrid);
 
-        // Get the image and text components to update the slot with the item’s icon and name
-        Image iconImage = itemSlot.transform.Find("Icon").GetComponent<Image>(); // Ensure "Icon" is the correct child name
+        Image iconImage = itemSlot.transform.Find("Icon").GetComponent<Image>(); 
         Text itemName = itemSlot.transform.Find("ItemName").GetComponent<Text>();
 
-        // Set the icon and name for the item slot
-        iconImage.sprite = newItem.icon;  // Set the item's icon
-        itemName.text = newItem.name;     // Set the item's name
+        iconImage.sprite = newItem.icon;  
+        itemName.text = newItem.name;     
         inventoryItems.Add(newItem);
-        DisplayPage(currentPage);  // Refresh the inventory UI after adding a new item
+        DisplayPage(currentPage); 
+    }
+
+    public void AddItemToSlot(Sprite itemSprite, InventoryItem item)
+    {
+        foreach (GameObject slot in inventorySlots)
+        {
+            Image slotImage = slot.transform.GetChild(0).GetComponent<Image>();
+
+            if (slotImage.sprite == null)
+            {
+                slotImage.sprite = itemSprite;
+                slot.GetComponent<Button>().onClick.AddListener(() => SelectItem(item)); 
+                break;  
+            }
+        }
+    }
+
+
+    public void SelectItem(InventoryItem item)
+    {
+        selectedItem = item.gameObject;
+        Debug.Log("Selected item: " + item.itemName);
+    }
+
+    public void UseSelectedItem()
+    {
+        if (selectedItem != null)
+        {
+            InventoryItem itemComponent = selectedItem.GetComponent<InventoryItem>();
+            itemComponent.UseItem();
+        }
+        else
+        {
+            Debug.Log("No item selected.");
+        }
+    }
+
+    public void RemoveItem(InventoryItem item)
+    {
+        foreach (GameObject slot in inventorySlots)
+        {
+            Image slotImage = slot.transform.GetChild(0).GetComponent<Image>();
+            if (slotImage.sprite == item.itemIcon)
+            {
+                slotImage.sprite = null; 
+                break;
+            }
+        }
     }
 
     void ClearInventoryUI()
@@ -93,11 +145,11 @@ public class InventoryManager : MonoBehaviour
     }
 }
 
-// Updated Item class to include an icon (optional)
+
 public class Item
 {
     public string name;
-    public Sprite icon;  // Icon to display in the inventory (optional)
+    public Sprite icon;  
 
     public Item(string name, Sprite icon = null)
     {
