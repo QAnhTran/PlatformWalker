@@ -1,20 +1,22 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance; // Singleton instance
+    public static InventoryManager Instance; 
 
-    public List<Item> inventoryItems = new List<Item>(); // List of items in the inventory
-    public Transform inventoryUI; // Reference to the UI grid
-    public GameObject itemSlotPrefab; // Prefab for each item slot
+    public List<Item> inventoryItems = new List<Item>();                                                      
+    public GameObject itemSlotPrefab; 
     public GameObject[] inventorySlots;
     public int itemsPerPage = 9;
     public Transform inventoryGrid;
     public Button inventoryButton;
-    public GameObject selectedItem;
-    
+    public Item selectedItem;
+    public GameObject selectedItemPrefab;  
+    public PlayerMove player;
+
 
     private int currentPage = 0;
 
@@ -32,19 +34,20 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
         DisplayPage(currentPage);
     }
 
     void DisplayPage(int page)
     {
-        ClearInventoryUI(); 
+        ClearInventoryUI();
 
         int startItemIndex = page * itemsPerPage;
         int endItemIndex = Mathf.Min(startItemIndex + itemsPerPage, inventoryItems.Count);
 
         for (int i = startItemIndex; i < endItemIndex; i++)
         {
-            GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryUI);
+            GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryGrid);
             itemSlot.GetComponentInChildren<Text>().text = inventoryItems[i].name;
         }
     }
@@ -59,19 +62,35 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
+        if (newItem == null)
+        {
+            Debug.LogError("Attempted to add a null item to the inventory!");
+            return;
+        }
+
+        Debug.Log("Adding item: " + newItem.name);
+
         GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryGrid);
 
-        Image iconImage = itemSlot.transform.Find("Icon").GetComponent<Image>(); 
+        Image iconImage = itemSlot.transform.Find("Icon").GetComponent<Image>();
         Text itemName = itemSlot.transform.Find("ItemName").GetComponent<Text>();
 
-        iconImage.sprite = newItem.icon;  
-        itemName.text = newItem.name;     
+        iconImage.sprite = newItem.icon;
+        itemName.text = newItem.name;
         inventoryItems.Add(newItem);
-        DisplayPage(currentPage); 
+
+        DisplayPage(currentPage);
     }
 
-    public void AddItemToSlot(Sprite itemSprite, InventoryItem item)
+
+
+    public void AddItemToSlot(Sprite itemSprite, Item item)
     {
+        if (item == null)
+        {
+            Debug.LogError("Cannot add a null item to the inventory slot.");
+            return;
+        }
         foreach (GameObject slot in inventorySlots)
         {
             Image slotImage = slot.transform.GetChild(0).GetComponent<Image>();
@@ -79,40 +98,66 @@ public class InventoryManager : MonoBehaviour
             if (slotImage.sprite == null)
             {
                 slotImage.sprite = itemSprite;
-                slot.GetComponent<Button>().onClick.AddListener(() => SelectItem(item)); 
-                break;  
+                slot.GetComponent<Button>().onClick.AddListener(() => SelectItem(item));
+                break;
             }
         }
     }
 
 
-    public void SelectItem(InventoryItem item)
+    public void SelectItem(Item item)
     {
-        selectedItem = item.gameObject;
-        Debug.Log("Selected item: " + item.itemName);
+        if (item == null)
+        {
+            Debug.LogError("Item is null! Cannot select a null item.");
+            return;
+        }
+
+        selectedItemPrefab = item.prefab;  
+
+        Debug.Log("Selected item: " + item.name);
     }
+
 
     public void UseSelectedItem()
     {
-        if (selectedItem != null)
+        if (selectedItemPrefab == null)
         {
-            InventoryItem itemComponent = selectedItem.GetComponent<InventoryItem>();
-            itemComponent.UseItem();
+            Debug.LogError("No item is selected! Cannot use the item.");
+            return;
         }
-        else
+
+        if (player == null)
         {
-            Debug.Log("No item selected.");
+            Debug.LogError("Player reference is missing! Cannot equip the item.");
+            return;
         }
+
+        // Clear any previous item in the player's hand
+        if (player.handTransform.childCount > 0)
+        {
+            foreach (Transform child in player.handTransform)
+            {
+                Destroy(child.gameObject);  
+            }
+        }
+
+        // Instantiate the selected item in the player's hand
+        GameObject instantiatedItem = Instantiate(selectedItemPrefab, player.handTransform);
+        instantiatedItem.transform.localPosition = Vector3.zero;
+        instantiatedItem.transform.localRotation = Quaternion.identity;
+
+        Debug.Log("Item equipped in player's hand: " + instantiatedItem.name);
     }
 
-    public void RemoveItem(InventoryItem item)
+    public void RemoveItem(Item item)
     {
         foreach (GameObject slot in inventorySlots)
         {
             Image slotImage = slot.transform.GetChild(0).GetComponent<Image>();
-            if (slotImage.sprite == item.itemIcon)
+            if (slotImage.sprite == item.icon)
             {
-                slotImage.sprite = null; 
+                slotImage.sprite = null;
                 break;
             }
         }
@@ -120,7 +165,7 @@ public class InventoryManager : MonoBehaviour
 
     void ClearInventoryUI()
     {
-        foreach (Transform child in inventoryUI)
+        foreach (Transform child in inventoryGrid)
         {
             Destroy(child.gameObject);
         }
@@ -149,11 +194,13 @@ public class InventoryManager : MonoBehaviour
 public class Item
 {
     public string name;
-    public Sprite icon;  
+    public Sprite icon;
+    public GameObject prefab; 
 
-    public Item(string name, Sprite icon = null)
+    public Item(string name, Sprite icon = null, GameObject prefab = null)
     {
         this.name = name;
         this.icon = icon;
+        this.prefab = prefab;  
     }
 }

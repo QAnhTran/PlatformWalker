@@ -10,6 +10,9 @@ public class PlayerMove : MonoBehaviourPun
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
+    public Transform handTransform;  // The point where items will appear in the player's hand
+    private GameObject equippedItem;
+
 
     [SerializeField] private LayerMask jumpableGround;
 
@@ -36,6 +39,11 @@ public class PlayerMove : MonoBehaviourPun
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
+        if (handTransform == null)
+        {
+            Debug.LogError("Player hand transform is not assigned!");
+        }   
+
         if (GameManager.Instance.isMultiplayer)
         {
             if (photonView.IsMine)
@@ -50,7 +58,6 @@ public class PlayerMove : MonoBehaviourPun
         }
         else
         {
-            // Single-player setup
             Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
             if (cameracontroller != null)
             {
@@ -61,7 +68,7 @@ public class PlayerMove : MonoBehaviourPun
 
     private void Update()
     {
-                if (!raceFinished)
+        if (!raceFinished)
         {
             if (GameManager.Instance.isMultiplayer)
             {
@@ -83,13 +90,13 @@ public class PlayerMove : MonoBehaviourPun
             if (IsGrounded())
             {
                 Jump(jumpForce);
-                canDoubleJump = true; // Reset double jump ability if grounded
+                canDoubleJump = true; 
                 isDoubleJumping = false;
             }
             else if (canDoubleJump) // Check if double jump is allowed
             {
-                Jump(doubleJumpForce); // Use double jump force
-                canDoubleJump = false; // Prevent further double jumps until grounded again
+                Jump(doubleJumpForce); 
+                canDoubleJump = false; 
                 isDoubleJumping = true;
             }
         }
@@ -101,9 +108,15 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         UpdateAnimationState();
+
+        if (Input.GetKeyDown(KeyCode.E))  // 'E' for "use" item
+        {
+            UseEquippedItem();
+        }
+
     }
 
-        void HandleMovement()
+    void HandleMovement()
     {
         float move = Input.GetAxis("Horizontal");
         transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
@@ -169,5 +182,30 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
+    public void EquipItem(InventoryItem item)
+    {
+        if (equippedItem != null)
+        {
+            Destroy(equippedItem);
+        }
 
+        // Instantiate the new item in the player's hand
+        equippedItem = Instantiate(item.gameObject, handTransform.position, Quaternion.identity, handTransform);
+
+        // Adjust item's transform or any other properties if needed
+        equippedItem.transform.localPosition = Vector3.zero;  
+    }
+
+    public void UseEquippedItem()
+    {
+        if (equippedItem != null)
+        {
+            InventoryItem itemComponent = equippedItem.GetComponent<InventoryItem>();
+
+            if (itemComponent != null)
+            {
+                itemComponent.UseItem();  
+            }
+        }
+    }
 }

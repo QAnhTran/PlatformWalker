@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
-     private int cherries = 0;
+    private int cherries = 0;
 
     [SerializeField] private Text cherriesText;
     [SerializeField] private AudioSource collectionSoundEffect;
     public Sprite itemIcon;  
+    [SerializeField] private GameObject cherryPrefab;  
     private InventoryManager inventoryManager;
 
     private void Start()
@@ -17,17 +18,19 @@ public class ItemCollector : MonoBehaviour
         inventoryManager = GameObject.FindGameObjectWithTag("Inventory Manager").GetComponent<InventoryManager>();
     }
 
-     private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Cherry"))
         {
             collectionSoundEffect.Play();
 
-        InventoryItem newItem = new InventoryItem
-        {
-            itemName = "Cherry",
-            itemIcon = itemIcon 
-        };
+            // Create a new Item with the cherry's icon and prefab
+            Item newItem = new Item(name)
+            {
+                name = "Cherry",
+                icon = itemIcon,
+                prefab = cherryPrefab  
+            };
 
             inventoryManager.AddItemToSlot(itemIcon, newItem);
             Destroy(collision.gameObject);
