@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyBot : MonoBehaviour
 {
-    public float detectionRange = 10f;  // Distance at which the enemy starts following the player
-    public float attackRange = 2f;      // Distance at which the enemy attacks the player
-    public float moveSpeed = 2f;        // Movement speed of the enemy
-    public float attackCooldown = 2.0f; // Time between attacks
+    public float detectionRange = 10f;  
+    public float attackRange = 2f;      
+    public float moveSpeed = 2f;        
+    public float attackCooldown = 2.0f; 
     private float attackTimer = 0f;
     private float lastAttackTime;
     
@@ -40,7 +40,6 @@ public class EnemyBot : MonoBehaviour
             FollowPlayer();
         }
 
-        // Cooldown countdown
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
@@ -53,10 +52,10 @@ public class EnemyBot : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
 
-        // Optional: rotate the enemy to face the player
+        // rotate the enemy to face the player
         if (direction.x != 0)
         {
-            float originalXScale = Mathf.Abs(transform.localScale.x);  // Get original scale
+            float originalXScale = Mathf.Abs(transform.localScale.x);  
             transform.localScale = new Vector3(Mathf.Sign(direction.x) * originalXScale, transform.localScale.y, transform.localScale.z);
         }
     }
