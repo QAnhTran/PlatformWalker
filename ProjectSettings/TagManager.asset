@@ -8,6 +8,8 @@ TagManager:
   - Trap
   - Enemy
   - Inventory Manager
+  - Bomb
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -17,10 +19,10 @@ TagManager:
   - UI
   - Ground
   - Enemy HP
-  - 
-  - 
-  - 
-  - 
+  - Bomb
+  - Player
+  - Trap
+  - Enemy
   - 
   - 
   - 
