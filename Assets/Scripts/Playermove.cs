@@ -1,10 +1,8 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviourPun
+public class PlayerMove : MonoBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -42,46 +40,23 @@ public class PlayerMove : MonoBehaviourPun
         if (handTransform == null)
         {
             Debug.LogError("Player hand transform is not assigned!");
-        }   
-
-        if (GameManager.Instance.isMultiplayer)
-        {
-            if (photonView.IsMine)
-            {
-                Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
-                if (cameracontroller != null)
-                {
-                    cameracontroller.Player = transform;
-                }
-            }
-            Debug.Log(photonView.IsMine);
         }
-        else
+
+        Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
+        if (cameracontroller != null)
         {
-            Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
-            if (cameracontroller != null)
-            {
-                cameracontroller.Player = transform;
-            }
+            cameracontroller.Player = transform;
         }
     }
 
     private void Update()
     {
-        if (!raceFinished)
-        {
-            if (GameManager.Instance.isMultiplayer)
-            {
-                if (photonView.IsMine)
-                {
-                    HandleMovement();
-                }
-            }
-            else
-            {
-                HandleMovement();
-            }
-        }
+
+
+
+        HandleMovement();
+
+
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
@@ -90,22 +65,21 @@ public class PlayerMove : MonoBehaviourPun
             if (IsGrounded())
             {
                 Jump(jumpForce);
-                canDoubleJump = true; 
+                canDoubleJump = true;
                 isDoubleJumping = false;
             }
             else if (canDoubleJump) // Check if double jump is allowed
             {
-                Jump(doubleJumpForce); 
-                canDoubleJump = false; 
+                Jump(doubleJumpForce);
+                canDoubleJump = false;
                 isDoubleJumping = true;
             }
         }
 
-        if (photonView.IsMine)
-        {
-            float move = Input.GetAxis("Horizontal");
-            transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
-        }
+
+        float move = Input.GetAxis("Horizontal");
+        transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
+
 
         UpdateAnimationState();
 
@@ -193,7 +167,7 @@ public class PlayerMove : MonoBehaviourPun
         equippedItem = Instantiate(item.gameObject, handTransform.position, Quaternion.identity, handTransform);
 
         // Adjust item's transform or any other properties if needed
-        equippedItem.transform.localPosition = Vector3.zero;  
+        equippedItem.transform.localPosition = Vector3.zero;
     }
 
     public void UseEquippedItem()
@@ -204,7 +178,7 @@ public class PlayerMove : MonoBehaviourPun
 
             if (itemComponent != null)
             {
-                itemComponent.UseItem();  
+                itemComponent.UseItem();
             }
         }
     }

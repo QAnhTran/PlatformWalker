@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class SpawnPlayer : MonoBehaviour
 {
@@ -16,15 +15,8 @@ public class SpawnPlayer : MonoBehaviour
     private void Start()
     {
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+        Instantiate(PlayerPrefab, randomPosition, Quaternion.identity);
 
-        if (GameManager.Instance.isMultiplayer)
-        {
-            PhotonNetwork.Instantiate(PlayerPrefab.name, randomPosition, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(PlayerPrefab, randomPosition, Quaternion.identity);
-        }
     }
 
 
