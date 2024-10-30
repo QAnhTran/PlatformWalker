@@ -9,10 +9,15 @@ public class ItemCollector : MonoBehaviour
 
     [SerializeField] private Text cherriesText;
     [SerializeField] private AudioSource collectionSoundEffect;
-    public Sprite itemIcon;
+
     [SerializeField] private GameObject cherryPrefab;
-    public Sprite bombIcon; // Assign the bomb sprite in the Inspector
     public GameObject bombPrefab;
+    [SerializeField] private GameObject shieldPrefab;
+
+    public Sprite itemIcon;
+    public Sprite bombIcon;
+    public Sprite shieldIcon;
+
     private InventoryManager inventoryManager;
 
     private void Start()
@@ -24,49 +29,39 @@ public class ItemCollector : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Cherry"))
         {
-            collectionSoundEffect.Play();
-
-            // Create a new Item with the cherry's icon and prefab
-            Item newItem = new Item(name)
-            {
-                name = "Cherry",
-                icon = itemIcon,
-                prefab = cherryPrefab
-            };
-
-            inventoryManager.AddItemToSlot(itemIcon, newItem);
-            Destroy(collision.gameObject);
+            CollectItem("Cherry", itemIcon, cherryPrefab);
             cherries++;
             cherriesText.text = "Cherries: " + cherries;
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Bomb"))
         {
-            collectionSoundEffect.Play();
-            Item bombItem = new Item(name)
-            {
-                name = "Bomb",
-                icon = itemIcon,
-                prefab = bombPrefab
-            };
-            inventoryManager.AddItemToSlot(bombIcon, bombItem);
+            CollectItem("Bomb", bombIcon, bombPrefab);
             Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Shield"))
         {
-            collectionSoundEffect.Play();
-
-            // Create a new Item with the cherry's icon and prefab
-            Item newItem = new Item(name)
-            {
-                name = "Shield",
-                icon = itemIcon,
-                prefab = cherryPrefab
-            };
-
-            inventoryManager.AddItemToSlot(itemIcon, newItem);
+            CollectItem("Shield", shieldIcon, shieldPrefab);
             Destroy(collision.gameObject);
         }
+
+        
+    }
+
+    private void CollectItem(string itemName, Sprite itemIcon, GameObject itemPrefab)
+    {
+        collectionSoundEffect.Play();
+
+        // Create a new Item with the provided name, icon, and prefab
+        Item newItem = new Item(itemName)
+        {
+            name = itemName,
+            icon = itemIcon,
+            prefab = itemPrefab
+        };
+
+        inventoryManager.AddItemToSlot(itemIcon, newItem);
     }
 }
