@@ -839,7 +839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &201931003
 Transform:
   m_ObjectHideFlags: 0
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: banana
+  itemName: shield
   itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   isConsumable: 0
   itemPrefab: {fileID: 216259322}
@@ -1076,10 +1076,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 1226689152}
   collectionSoundEffect: {fileID: 7262630015680496898}
-  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   cherryPrefab: {fileID: 216259322}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 216259322}
+  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
 --- !u!1 &292685376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,10 +2363,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 1226689152}
   collectionSoundEffect: {fileID: 7262630015680496898}
-  itemIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
   cherryPrefab: {fileID: 1028928633}
-  bombIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
   bombPrefab: {fileID: 1028928633}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
+  bombIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
+  shieldIcon: {fileID: 0}
 --- !u!114 &510818614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3826,7 +3830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788996148229655278, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3788996148229655278, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
       propertyPath: m_TagString
@@ -5185,10 +5189,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 1226689152}
   collectionSoundEffect: {fileID: 7262630015680496898}
-  itemIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
   cherryPrefab: {fileID: 1028928633}
-  bombIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
   bombPrefab: {fileID: 1028928633}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
+  bombIcon: {fileID: 21300000, guid: 6dec5c53ddfb4414b95f16b2cdde7280, type: 3}
+  shieldIcon: {fileID: 0}
 --- !u!114 &1028928640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5391,10 +5397,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 1226689152}
   collectionSoundEffect: {fileID: 7262630015680496898}
-  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   cherryPrefab: {fileID: 216259322}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 1111908402}
+  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
+  bombIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
+  shieldIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
 --- !u!1001 &1183058561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6240,10 +6248,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!114 &1414817731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77589,10 +77599,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!114 &1583458883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78133,10 +78145,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!114 &1784439540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78711,10 +78725,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!4 &1825495954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7007742735665750465, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
@@ -81910,10 +81926,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!114 &2007758886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82642,10 +82660,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cherriesText: {fileID: 0}
   collectionSoundEffect: {fileID: 0}
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
   cherryPrefab: {fileID: 0}
-  bombIcon: {fileID: 0}
   bombPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 0}
+  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
+  bombIcon: {fileID: 0}
+  shieldIcon: {fileID: 0}
 --- !u!114 &2145160661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82972,6 +82992,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1028928633}
     - target: {fileID: 1631137685826974751, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
+      propertyPath: shieldIcon
+      value: 
+      objectReference: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
+    - target: {fileID: 1631137685826974751, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: cherriesText
       value: 
       objectReference: {fileID: 1226689152}
@@ -82979,6 +83003,10 @@ PrefabInstance:
       propertyPath: cherryPrefab
       value: 
       objectReference: {fileID: 1825495948}
+    - target: {fileID: 1631137685826974751, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
+      propertyPath: shieldPrefab
+      value: 
+      objectReference: {fileID: 216259322}
     - target: {fileID: 3397336764820839139, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: thanhmau
       value: 
