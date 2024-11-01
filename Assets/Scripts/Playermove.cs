@@ -28,7 +28,6 @@ public class PlayerMove : MonoBehaviour
     private MovementState state = MovementState.idle;
 
     [SerializeField] private AudioSource jumpSoundEffect;
-    private bool raceFinished = false;
 
     private void Start()
     {
