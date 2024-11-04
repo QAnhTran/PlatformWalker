@@ -19,6 +19,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject bombPrefab;
     public PlayerMove player;
     public int throwForce;
+    public lifeplayerLV1 playerLifeScript;
 
 
     private int currentPage = 0;
@@ -201,6 +202,11 @@ public class InventoryManager : MonoBehaviour
         selectedItemPrefab = item.prefab;
 
         Debug.Log("Selected item: " + item.name);
+
+        if (item.name == "Shield") // Ensure the item name matches your shield's name
+        {
+            playerLifeScript.hasShield = true;
+        }
     }
 
 
@@ -311,23 +317,5 @@ public class Item
 
 
 }
-/*
-public class BombItem : Item
-{
-    // public GameObject prefab;   // Bomb prefab
-    // public Sprite icon;
-    public float explosionDelay;
-    public float explosionRadius;
-    public int damage;
 
-    public BombItem(string name, Sprite icon, GameObject prefab, float explosionDelay, float explosionRadius, int damage)
-        : base(name, icon, prefab)
-    {
-        this.prefab = prefab;
-        this.explosionDelay = explosionDelay;
-        this.explosionRadius = explosionRadius;
-        this.damage = damage;
-    }
-}
-*/
 

@@ -9,6 +9,7 @@ public class lifeplayerLV1 : MonoBehaviour
     public float luongmauhientai;
     public float luongmautoida = 10;
     public bool hasShield = false;
+    public bool isShieldActivated = false;
     private bool isAlive = true;
     private Rigidbody2D rb;
     private Animator anim;
@@ -34,16 +35,23 @@ public class lifeplayerLV1 : MonoBehaviour
                 Die();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.E) && hasShield == true) 
+        {
+            isShieldActivated = true;
+            Debug.Log("Shield activated!");
+        } 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            if (hasShield)
+            if (isShieldActivated)
             {
                 Debug.Log("Shield protected the player from the trap!");
-                hasShield = false; // Deactivate shield after blocking the trap
+                isShieldActivated = false; // Deactivate shield after blocking the trap
+                hasShield = false;
             }
             else if (isAlive) // Make sure Die() only gets called if the player is alive and unprotected
             {
