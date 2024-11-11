@@ -8,10 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public Transform[] spawnPoints;
     public GameObject playerPrefab;
-    public bool isMultiplayer;
-
     private bool playerInstantiated = false;
-
 
     void Awake()
     {
@@ -25,6 +22,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
         Debug.Log("GameManager Start called");
@@ -59,5 +57,4 @@ public class GameManager : MonoBehaviour
             Debug.LogError("CameraFollowPlayer script not found on the Main Camera.");
         }
     }
-
 }

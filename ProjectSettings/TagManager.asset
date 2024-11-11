@@ -23,7 +23,7 @@ TagManager:
   - Player
   - Trap
   - Enemy
-  - 
+  - Transition
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Enemy HP
     uniqueID: 3808837741
+    locked: 0
+  - name: Transition
+    uniqueID: 390660873
     locked: 0

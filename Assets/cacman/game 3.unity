@@ -385,7 +385,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 6, y: -350}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58429998
 MonoBehaviour:
@@ -1470,8 +1470,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 674, y: 363}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 760, y: 363}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &244045023
 MonoBehaviour:
@@ -1567,6 +1567,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244045021}
   m_CullTransparentMesh: 1
+--- !u!1001 &253973876
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 925.6601
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 202.78781
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2788174
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852234060653822401, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794370720176286243, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+      propertyPath: m_Name
+      value: Scene Transition Animator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+--- !u!95 &253973877 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4883655643443609566, guid: 0560d94eb8326034c92bb9cbab366cc9, type: 3}
+  m_PrefabInstance: {fileID: 253973876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &279264880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,8 +1847,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 674, y: 467}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 760, y: 467}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &299364125
 MonoBehaviour:
@@ -3249,7 +3311,11 @@ MonoBehaviour:
   inventoryGrid: {fileID: 0}
   inventoryButton: {fileID: 58429996}
   selectedItemPrefab: {fileID: 0}
+  bombIcon: {fileID: 0}
+  bombPrefab: {fileID: 0}
   player: {fileID: 241192492}
+  throwForce: 0
+  playerLifeScript: {fileID: 0}
 --- !u!4 &619696572
 Transform:
   m_ObjectHideFlags: 0
@@ -3912,7 +3978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -386, y: 485}
+  m_AnchoredPosition: {x: -450, y: 485}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &823265301
@@ -5160,7 +5226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5170,7 +5236,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 3
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -77710,8 +77776,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -397, y: 485}
-  m_SizeDelta: {x: 500, y: 30}
+  m_AnchoredPosition: {x: -500, y: 485}
+  m_SizeDelta: {x: 400, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1730837840
 MonoBehaviour:
@@ -79790,6 +79856,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 723277292595053229, guid: 05b0dc840e12b254ba06aff1b3c6d636, type: 3}
+      propertyPath: finishSound
+      value: 
+      objectReference: {fileID: 4207616039851057593}
+    - target: {fileID: 723277292595053229, guid: 05b0dc840e12b254ba06aff1b3c6d636, type: 3}
+      propertyPath: transitionAnim
+      value: 
+      objectReference: {fileID: 253973877}
     - target: {fileID: 7493672338354078033, guid: 05b0dc840e12b254ba06aff1b3c6d636, type: 3}
       propertyPath: m_LocalPosition.x
       value: 80.58
@@ -79868,6 +79942,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &4207616039851057593 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4019783264979471374, guid: 05b0dc840e12b254ba06aff1b3c6d636, type: 3}
+  m_PrefabInstance: {fileID: 4207616039851057590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6748748889224722140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80015,3 +80094,4 @@ SceneRoots:
   - {fileID: 710386626}
   - {fileID: 241192490}
   - {fileID: 619696572}
+  - {fileID: 253973876}
