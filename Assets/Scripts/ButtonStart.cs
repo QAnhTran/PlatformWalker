@@ -7,6 +7,7 @@ public class ButtonStart : MonoBehaviour
 
     public void LoadTargetScene()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(targetSceneName); 
     }
 }

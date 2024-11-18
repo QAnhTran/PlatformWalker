@@ -8,6 +8,7 @@ public class EnemyBot : MonoBehaviour
     public float attackRange = 2f;      
     public float moveSpeed = 2f;        
     public float attackCooldown = 2.0f; 
+    public EnemyShoot enemyShoot;
     private float attackTimer = 0f;
     private float lastAttackTime;
     
@@ -37,7 +38,9 @@ public class EnemyBot : MonoBehaviour
         else if (distanceToPlayer <= detectionRange)
         {
             // Follow the player if outside attack range but within detection range
+            enemyShoot.GetComponent<EnemyShoot>().FireBullets();
             FollowPlayer();
+            
         }
 
         if (attackTimer > 0)

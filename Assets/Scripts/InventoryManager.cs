@@ -20,6 +20,7 @@ public class InventoryManager : MonoBehaviour
     public PlayerMove player;
     public int throwForce;
     public lifeplayerLV1 playerLifeScript;
+    public Dictionary<GameObject, int> itemUses = new Dictionary<GameObject, int>();
 
 
     private int currentPage = 0;
@@ -39,9 +40,8 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
-        Debug.Log(inventoryGrid.gameObject.activeInHierarchy ? "Grid is Active" : "Grid is Inactive");
-
-        DisplayPage(currentPage);
+        GameObject bombPrefab = GameObject.FindGameObjectWithTag("Bomb");/* assign your bomb prefab */;
+//        itemUses[bombPrefab] = 3; // Set the initial uses for the bomb
     }
 
     void Update()
@@ -85,26 +85,37 @@ public class InventoryManager : MonoBehaviour
 
             if (bombItem != null)
             {
-                // Instantiate the bomb in front of the player
-                GameObject bombInstance = Instantiate(selectedItemPrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
-                Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
-
-                if (bombRb != null)
+                if (bombItem.usesLeft > 0)
                 {
-                    // Make the bomb dynamic (not kinematic) and apply force
-                    bombRb.isKinematic = false;
-                    Collider2D bombCollider = bombInstance.GetComponent<Collider2D>();
-                    if (bombCollider != null)
+                    // Instantiate the bomb and apply throwing logic
+                    GameObject bombInstance = Instantiate(selectedItemPrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
+                    Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
+
+                    if (bombRb != null)
                     {
-                        bombCollider.enabled = true;  // Enable collisions
+                        bombRb.isKinematic = false;
+                        Collider2D bombCollider = bombInstance.GetComponent<Collider2D>();
+                        if (bombCollider != null)
+                        {
+                            bombCollider.enabled = true;
+                        }
+
+                        Vector2 throwDirection = new Vector2(1f, 0.5f);
+                        bombRb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+
+                        // Decrement bomb use
+                        bombItem.usesLeft--;
+                        Debug.Log("Bomb thrown! Uses left: " + bombItem.usesLeft);
+                        if (bombItem.usesLeft <= 0)
+                        {
+                            Debug.Log("Bomb out of uses! Removing from inventory.");
+                            ClearPlayerHand();
+                        }
                     }
-
-                    // Apply a force to throw the bomb
-                    Vector2 throwDirection = new Vector2(1f, 0.5f);  // Right and up
-                    float throwForce = 5f;
-                    bombRb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
-
-                    Debug.Log("Bomb thrown!");
+                }
+                else
+                {
+                    Debug.LogWarning("No more uses left for the bomb.");
                 }
             }
             else
@@ -117,6 +128,19 @@ public class InventoryManager : MonoBehaviour
             Debug.LogWarning("No bomb selected to throw.");
         }
     }
+
+    public void ClearPlayerHand()
+    {
+        if (player.handTransform.childCount > 0)
+        {
+            foreach (Transform child in player.handTransform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
+
 
     public void AddItem(Item newItem)
     {
@@ -307,12 +331,14 @@ public class Item
     public string name;
     public Sprite icon;
     public GameObject prefab;
+    public int usesLeft;
 
-    public Item(string name, Sprite icon = null, GameObject prefab = null)
+    public Item(string name, Sprite icon = null, GameObject prefab = null, int uses = 1)
     {
         this.name = name;
         this.icon = icon;
         this.prefab = prefab;
+        this.usesLeft = uses;
     }
 
 

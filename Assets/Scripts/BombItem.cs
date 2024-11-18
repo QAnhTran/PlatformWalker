@@ -9,6 +9,13 @@ public class BombItem : MonoBehaviour
     public GameObject explosionEffect;
     public LayerMask targetLayers;
     public Entity enemy;
+    public int maxUses = 3;  // Set the maximum number of uses
+    public int usesLeft;
+
+    private void Start()
+    {
+        usesLeft = maxUses;  // Initialize with the maximum uses
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -53,7 +60,19 @@ public class BombItem : MonoBehaviour
         Destroy(gameObject);
     }
 
-
+    public void UseBomb()
+    {
+        if (usesLeft > 0)
+        {
+            usesLeft--;
+            Debug.Log("Bomb used. Uses left: " + usesLeft);
+            // Implement your bomb-throwing logic here
+        }
+        else
+        {
+            Debug.Log("No more uses left for this bomb!");
+        }
+    }
 
 
     // Function to destroy tiles within the explosion radius

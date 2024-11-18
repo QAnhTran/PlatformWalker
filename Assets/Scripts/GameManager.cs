@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public Transform[] spawnPoints;
     public GameObject playerPrefab;
     private bool playerInstantiated = false;
 
@@ -32,14 +31,6 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Player Prefab is not assigned.");
             return;
         }
-
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Debug.Log($"Selected spawn point: {spawnPoint.position}");
-
-        Debug.Log("Instantiating player for single-player");
-        GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        SetCameraFollow(player);
 
         playerInstantiated = true; // Prevent additional instantiations
     }
