@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
+public class SettingsMenu : MonoBehaviour
 {
     public GameObject settingsPanel;
 
