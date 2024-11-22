@@ -6,16 +6,10 @@ public class Entity : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
-    [SerializeField] public HealthBar healthBar; // Reference to the health bar
+    public HealthBar healthBar; // Reference to the health bar
 
     private void Start()
     {
-        if (healthBar == null)
-        {
-            Debug.LogError("HealthBar is not assigned in Entity!");
-            return;
-        }
-
         currentHealth = maxHealth;
         healthBar.SetHealth(currentHealth, maxHealth);
     }
