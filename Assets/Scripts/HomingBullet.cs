@@ -5,16 +5,16 @@ public class HomingBullet : MonoBehaviour
     public PlayerHealth playerHealth;
     public float force;
     private GameObject player;
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rb;
     private float timer = 0f;
 
     private void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
 
         Vector3 direction = player.transform.position - transform.position;
-        rigidbody2D.velocity = new Vector2(direction.x, direction.y).normalized * force;
+        rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
 
     }
 

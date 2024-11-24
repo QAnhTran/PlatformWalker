@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
-    public GameObject bullet;
-    public Transform bulletPos;
+    public GameObject bullet;        // The bullet prefab
+    public Transform bulletPos;      // Position to fire the bullet
 
-    private float timer;
-    private GameObject player;
+    private float timer;             // Tracks cooldown between shots
 
     public void FireBullets()
     {
         timer += Time.deltaTime;
 
-        if (timer > 2)
+        Debug.Log($"EnemyShoot Timer: {timer}"); // Debug timer progress
+
+        if (timer > 2) // Adjust cooldown as needed
         {
             timer = 0;
             Shoot();
@@ -21,6 +22,14 @@ public class EnemyShoot : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(bullet, bulletPos.position, Quaternion.identity);
+        if (bullet != null && bulletPos != null)
+        {
+            Debug.Log("Shooting a bullet!"); // Log the shooting action
+            Instantiate(bullet, bulletPos.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("Bullet or bullet position is not assigned in EnemyShoot!");
+        }
     }
 }
