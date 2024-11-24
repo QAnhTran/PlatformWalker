@@ -5760,6 +5760,10 @@ PrefabInstance:
       value: Ranged Enemy HP
       objectReference: {fileID: 0}
     - target: {fileID: 7832178110568498111, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
+      propertyPath: enemyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7832178110568498111, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
