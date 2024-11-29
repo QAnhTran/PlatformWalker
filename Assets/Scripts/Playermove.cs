@@ -50,9 +50,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-
-
-
         HandleMovement();
 
 
@@ -82,11 +79,11 @@ public class PlayerMove : MonoBehaviour
 
         UpdateAnimationState();
 
-        if (Input.GetKeyDown(KeyCode.E))  // 'E' for "use" item
+    /*    if (Input.GetKeyDown(KeyCode.E))  // 'E' for "use" item
         {
             UseEquippedItem();
         }
-
+*/
     }
 
     void HandleMovement()
@@ -154,7 +151,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
+/*
     public void EquipItem(InventoryItem item)
     {
         if (equippedItem != null)
@@ -179,6 +176,7 @@ public class PlayerMove : MonoBehaviour
             {
                 itemComponent.UseItem();
             }
-        }
-    }
+        } 
+    } 
+    */
 }

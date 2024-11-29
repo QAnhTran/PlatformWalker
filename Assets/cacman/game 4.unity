@@ -7729,6 +7729,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6788767792236587668, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6788767792236587668, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: handTransform
       value: 
       objectReference: {fileID: 1414918136}

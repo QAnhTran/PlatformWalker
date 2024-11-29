@@ -24,8 +24,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("GameManager Start called");
-
         if (playerPrefab == null)
         {
             Debug.LogError("Player Prefab is not assigned.");

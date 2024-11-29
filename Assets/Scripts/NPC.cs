@@ -7,16 +7,8 @@ public class NPC : MonoBehaviour
 {
     public GameObject dialoguePanel;
     public Text dialogueText;
-
-
    [SerializeField] AudioSource SoundDeathEffect;
-
     private bool playerIsClose;
-
-
-    public NPC()
-    {
-    }
 
     void Start()
     {

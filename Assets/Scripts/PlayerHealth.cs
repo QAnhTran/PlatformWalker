@@ -34,8 +34,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Assume player deals damage on collision
-            TakeDamage(10); // Adjust damage value as needed
+            TakeDamage(10);
         }
     }
 

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
-    public GameObject bullet;        // The bullet prefab
-    public Transform bulletPos;      // Position to fire the bullet
+    public GameObject bullet;       
+    public Transform bulletPos;      
 
     private float timer;             // Tracks cooldown between shots
 
@@ -11,9 +11,7 @@ public class EnemyShoot : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        Debug.Log($"EnemyShoot Timer: {timer}"); // Debug timer progress
-
-        if (timer > 2) // Adjust cooldown as needed
+        if (timer > 2) 
         {
             timer = 0;
             Shoot();
@@ -24,7 +22,6 @@ public class EnemyShoot : MonoBehaviour
     {
         if (bullet != null && bulletPos != null)
         {
-            Debug.Log("Shooting a bullet!"); // Log the shooting action
             Instantiate(bullet, bulletPos.position, Quaternion.identity);
         }
         else

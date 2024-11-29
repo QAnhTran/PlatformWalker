@@ -10,6 +10,9 @@ TagManager:
   - Inventory Manager
   - Bomb
   - Shield
+  - Terrain
+  - Bullet
+  - Transform
   layers:
   - Default
   - TransparentFX

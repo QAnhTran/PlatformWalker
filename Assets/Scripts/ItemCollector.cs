@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class ItemCollector : MonoBehaviour
 {
     private int cherries = 0;
-
     [SerializeField] private Text cherriesText;
     [SerializeField] private AudioSource collectionSoundEffect;
-
     [SerializeField] private GameObject cherryPrefab;
     public GameObject bombPrefab;
     [SerializeField] private GameObject shieldPrefab;
@@ -45,9 +43,7 @@ public class ItemCollector : MonoBehaviour
         {
             CollectItem("Shield", shieldIcon, shieldPrefab);
             Destroy(collision.gameObject);
-        }
-
-        
+        }  
     }
 
     private void CollectItem(string itemName, Sprite itemIcon, GameObject itemPrefab)

@@ -6,7 +6,7 @@ public class Entity : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
-    public HealthBar healthBar; // Reference to the health bar
+    public HealthBar healthBar; 
 
     private void Start()
     {
@@ -31,19 +31,28 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void Heal(float amount)
+  private void OnCollisionEnter2D(Collision2D collision)
+{
+    // Kiểm tra nếu va chạm với tag "Bullet"
+    if (collision.gameObject.CompareTag("Bullet"))
     {
-        currentHealth += amount;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        healthBar.SetHealth(currentHealth, maxHealth);
+        TakeDamage(10);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    // Kiểm tra nếu va chạm với tag "Player" và Transform có tên cụ thể
+    if (collision.gameObject.CompareTag("Player") && collision.transform.name == "Transform")
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // Assume player deals damage on collision
-            TakeDamage(10); // Adjust damage value as needed
-        }
+        // Không nhận damage
+        Debug.Log("Collided with Player and Specific Transform, no damage taken.");
+        return;
     }
+
+    // Kiểm tra nếu chỉ va chạm với tag "Player"
+    if (collision.gameObject.CompareTag("Player"))
+    {
+        TakeDamage(20);
+    }
+}
+
+ 
 }
