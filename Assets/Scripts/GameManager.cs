@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameObject playerPrefab;
+    private bool player;
     private bool playerInstantiated = false;
 
     void Awake()
@@ -31,6 +32,17 @@ public class GameManager : MonoBehaviour
         }
 
         playerInstantiated = true; // Prevent additional instantiations
+    }
+
+    void Update()
+    {
+        UpdatePlayerTarget();
+
+    }
+
+    void UpdatePlayerTarget()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     private void SetCameraFollow(GameObject player)

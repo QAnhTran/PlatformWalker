@@ -24,6 +24,7 @@ public class EnemyBot : MonoBehaviour
 
     void Update()
     {
+        UpdatePlayerTarget();
         // Calculate the distance between the enemy and the player
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -33,10 +34,15 @@ public class EnemyBot : MonoBehaviour
             // Follow the player if within detection range but outside attack range
             FollowPlayer();
             if (enemyType == EnemyType.Ranged)
-                {
-                    RangedAttack();
-                }
+            {
+                RangedAttack();
+            }
         }
+    }
+
+    void UpdatePlayerTarget()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     void FollowPlayer()
@@ -63,8 +69,8 @@ public class EnemyBot : MonoBehaviour
     {
         Debug.Log("Performing a ranged attack on the player!");
         // Trigger the shooting behavior
-            enemyShoot.GetComponent<EnemyShoot>().FireBullets();
-            FollowPlayer();
+        enemyShoot.GetComponent<EnemyShoot>().FireBullets();
+        FollowPlayer();
     }
 
     void OnDrawGizmosSelected()

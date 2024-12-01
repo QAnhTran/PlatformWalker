@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemSlotPrefab;
     public GameObject[] inventorySlots;
     public int itemsPerPage = 9;
+    public Transform activePlayerHand; // Reference to the active player's hand
     public Transform inventoryGrid;
     public Button inventoryButton;
     public Item selectedItem;
@@ -21,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     public int throwForce;
     public lifeplayerLV1 playerLifeScript;
     public Dictionary<GameObject, int> itemUses = new Dictionary<GameObject, int>();
+    private Transform activePlayer;
 
 
     private int currentPage = 0;
@@ -41,7 +43,8 @@ public class InventoryManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
         GameObject bombPrefab = GameObject.FindGameObjectWithTag("Bomb");/* assign your bomb prefab */;
-//        itemUses[bombPrefab] = 3; // Set the initial uses for the bomb
+        UpdateActivePlayer();
+        //        itemUses[bombPrefab] = 3; // Set the initial uses for the bomb
     }
 
     void Update()
@@ -66,6 +69,17 @@ public class InventoryManager : MonoBehaviour
             {
                 AddItemToGrid(inventoryItems[i]);  // Custom method to add items to the grid
             }
+        }
+    }
+
+    public void UpdateActivePlayer()
+    {
+        // Dynamically find the active player by tag
+        GameObject activePlayerObject = GameObject.FindGameObjectWithTag("Player");
+        if (activePlayerObject != null)
+        {
+            activePlayer = activePlayerObject.transform;
+            activePlayerHand = activePlayer.Find("Hand"); // Assuming each character has a "Hand" child object
         }
     }
 

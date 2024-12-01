@@ -4102,7 +4102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3b7e69a322edd4f92fff9a07f194fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 8589787009898068552}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &634816679 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5955966755820806626, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
@@ -6039,6 +6040,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5293633215124568758, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293633215124568758, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 69631427
+      objectReference: {fileID: 0}
     - target: {fileID: 5955966755820806626, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
       propertyPath: m_Name
       value: Enemy Variant Ranged
@@ -6066,6 +6075,10 @@ PrefabInstance:
     - target: {fileID: 7832178110568498111, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
       propertyPath: attackRange
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7832178110568498111, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
+      propertyPath: detectionRange
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9055633178761210300, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
       propertyPath: slider
@@ -80472,6 +80485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherCharacter: {fileID: 6579365778525811688}
+  isCurrentCharacterActive: 0
 --- !u!114 &1735652827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81183,6 +81197,7 @@ MonoBehaviour:
   - {fileID: 190202326}
   - {fileID: 772578187}
   itemsPerPage: 9
+  activePlayerHand: {fileID: 0}
   inventoryGrid: {fileID: 1973560723}
   inventoryButton: {fileID: 866510408}
   selectedItemPrefab: {fileID: 0}
@@ -81256,7 +81271,7 @@ PrefabInstance:
     - target: {fileID: 5137917409596371309, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8589787009898068552}
     - target: {fileID: 7584077381844809836, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -85537,11 +85552,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1440877292602851006, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.7
+      value: -6.72
       objectReference: {fileID: 0}
     - target: {fileID: 1440877292602851006, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.1
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 1440877292602851006, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: m_LocalPosition.z
@@ -85614,6 +85629,10 @@ PrefabInstance:
     - target: {fileID: 4576943461703202590, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576943461703202590, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4576943461703202590, guid: 08fc09378a2abef45a355ee5855a0c22, type: 3}
       propertyPath: m_IsActive
@@ -85850,6 +85869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherCharacter: {fileID: 1735652824}
+  isCurrentCharacterActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
