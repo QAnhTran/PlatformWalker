@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
         Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
         if (cameracontroller != null)
         {
-            cameracontroller.Player = transform;
+            //cameracontroller.Player = transform;
         }
     }
 

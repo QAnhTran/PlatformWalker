@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         if (cameraFollow != null)
         {
             Debug.Log("Camera follow set to player");
-            cameraFollow.Player = player.transform;
+         //   cameraFollow.Player = player.transform;
         }
         else
         {

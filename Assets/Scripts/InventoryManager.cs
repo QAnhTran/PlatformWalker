@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public int itemsPerPage = 9;
     public Transform activePlayerHand; // Reference to the active player's hand
     public Transform inventoryGrid;
+    private Transform activeHand;
     public Button inventoryButton;
     public Item selectedItem;
     public GameObject selectedItemPrefab;
@@ -74,14 +76,20 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateActivePlayer()
     {
-        // Dynamically find the active player by tag
         GameObject activePlayerObject = GameObject.FindGameObjectWithTag("Player");
         if (activePlayerObject != null)
         {
             activePlayer = activePlayerObject.transform;
-            activePlayerHand = activePlayer.Find("Hand"); // Assuming each character has a "Hand" child object
+            activePlayerHand = activePlayer.Find("Hand"); // Assuming each character has a child named "Hand"
+            SetActiveHand(activePlayerHand); // Ensure the active hand is updated
+            Debug.Log("Updated active player and hand.");
+        }
+        else
+        {
+            Debug.LogError("No active player found with the Player tag.");
         }
     }
+
 
     public void AddItemToGrid(Item item)
     {
@@ -101,8 +109,13 @@ public class InventoryManager : MonoBehaviour
             {
                 if (bombItem.usesLeft > 0)
                 {
+
+
+                    Transform hand = InventoryManager.Instance.GetActiveHand();
+                    GameObject bombInstance = Instantiate(selectedItemPrefab, hand.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
+
                     // Instantiate the bomb and apply throwing logic
-                    GameObject bombInstance = Instantiate(selectedItemPrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
+                    //GameObject bombInstance = Instantiate(selectedItemPrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
                     Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
 
                     if (bombRb != null)
@@ -241,11 +254,34 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log("Selected item: " + item.name);
 
-        if (item.name == "Shield") // Ensure the item name matches your shield's name
+        if (item.name == "vpBaove Item") // Ensure the item name matches your shield's name
         {
             playerLifeScript.hasShield = true;
         }
     }
+
+    public void SetActiveHand(Transform hand)
+    {
+        if (hand == null)
+        {
+            Debug.LogError("Active hand is being set to null. Check character switch logic!");
+            return;
+        }
+
+        activeHand = hand;
+        Debug.Log($"Active hand set to: {activeHand.name}");
+    }
+
+
+    public Transform GetActiveHand()
+    {
+        if (activeHand == null)
+        {
+            Debug.LogWarning("Active hand is null. UpdateActivePlayer may not have been called.");
+        }
+        return activeHand;
+    }
+
 
 
     public void UseSelectedItem()
@@ -272,9 +308,14 @@ public class InventoryManager : MonoBehaviour
         }
 
         // Instantiate the selected item in the player's hand
-        GameObject instantiatedItem = Instantiate(selectedItemPrefab, player.handTransform);
+        // GameObject instantiatedItem = Instantiate(selectedItemPrefab, player.handTransform);
+
+        GameObject instantiatedItem = Instantiate(selectedItemPrefab, activeHand.position, Quaternion.identity);
+        instantiatedItem.transform.SetParent(activeHand);
         instantiatedItem.transform.localPosition = Vector3.zero;
         instantiatedItem.transform.localRotation = Quaternion.identity;
+
+
 
         // Check if it's a bomb
         BombItem bombItem = instantiatedItem.GetComponent<BombItem>();

@@ -4103,7 +4103,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 8589787009898068552}
-  offset: {x: 0, y: 0, z: 0}
+  mainCameraOffset: {x: 0, y: 0, z: -10}
+  minimapCameraOffset: {x: 0, y: 10, z: 0}
+  isMainCamera: 0
 --- !u!1 &634816679 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5955966755820806626, guid: 59e2833f3d71b9e4283f497cd5380561, type: 3}
@@ -4707,6 +4709,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675120691}
   m_CullTransparentMesh: 1
+--- !u!20 &681024863 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1336791169779616287, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
+  m_PrefabInstance: {fileID: 1827114435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682354114
 GameObject:
   m_ObjectHideFlags: 0
@@ -5009,7 +5016,7 @@ PrefabInstance:
       objectReference: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
     - target: {fileID: 3788996148229655278, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
       propertyPath: m_Name
-      value: vpBaove
+      value: Shield
       objectReference: {fileID: 0}
     - target: {fileID: 3788996148229655278, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
       propertyPath: m_IsActive
@@ -79857,9 +79864,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603900117}
+      - m_Target: {fileID: 1603900115}
         m_TargetAssemblyTypeName: ButtonStart, Assembly-CSharp
-        m_MethodName: LoadTargetScene
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -81272,6 +81279,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 8589787009898068552}
+    - target: {fileID: 5137917409596371309, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 624534163}
+    - target: {fileID: 5137917409596371309, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
+      propertyPath: minimapCamera
+      value: 
+      objectReference: {fileID: 681024863}
     - target: {fileID: 7584077381844809836, guid: 55c0d47b8f5202348bde35aa38322f35, type: 3}
       propertyPath: m_Pivot.x
       value: 0

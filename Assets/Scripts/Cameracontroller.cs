@@ -1,37 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cameracontroller : MonoBehaviour
 {
-    [SerializeField] public Transform Player;
-    public Vector3 offset = new Vector3(0, 10, 0); // Offset for the minimap position
+    [Header("Player Target")]
+    [SerializeField] private Transform Player; // Current player to follow
+
+    [Header("Camera Offsets")]
+    public Vector3 mainCameraOffset = new Vector3(0, 0, -10); // Offset for the main camera
+    public Vector3 minimapCameraOffset = new Vector3(0, 10, 0); // Offset for the minimap camera
+
+    [Header("Camera Type")]
+    public bool isMainCamera; // True if this is the main camera, false if minimap
 
     void Start()
     {
-        UpdatePlayerTarget(); // Find the active player at the start
+        // Find the initial player target
+        UpdatePlayerTarget();
     }
 
-    void Update()
+    void LateUpdate()
     {
-        UpdatePlayerTarget(); // Dynamically update the player target
-
+        // Follow the assigned player target
         if (Player != null)
         {
-            // Follow the player's position with an offset
+            Vector3 offset = isMainCamera ? mainCameraOffset : minimapCameraOffset;
             transform.position = new Vector3(Player.position.x, Player.position.y, transform.position.z);
         }
-    }
-
-    private void UpdatePlayerTarget()
-    {
-        // Dynamically find the active player by tag
-        GameObject activePlayer = GameObject.FindGameObjectWithTag("Player");
-        if (activePlayer != null)
+        else
         {
-            Player = activePlayer.transform;
+            Debug.LogWarning("No player assigned to follow!");
         }
     }
+
+    public void UpdatePlayerTarget(Transform newPlayer = null)
+    {
+        // Update the player target dynamically
+        if (newPlayer != null)
+        {
+            Player = newPlayer;
+        }
+        else
+        {
+            GameObject activePlayer = GameObject.FindGameObjectWithTag("Player");
+            if (activePlayer != null)
+            {
+                Player = activePlayer.transform;
+            }
+        }
+
+        Debug.Log($"{(isMainCamera ? "Main Camera" : "Minimap Camera")} target updated to: {Player?.name ?? "None"}");
+    }
 }
-
-
