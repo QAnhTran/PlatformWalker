@@ -80,8 +80,21 @@ public class InventoryManager : MonoBehaviour
         if (activePlayerObject != null)
         {
             activePlayer = activePlayerObject.transform;
-            activePlayerHand = activePlayer.Find("Hand"); // Assuming each character has a child named "Hand"
-            SetActiveHand(activePlayerHand); // Ensure the active hand is updated
+            Transform newActiveHand = activePlayer.Find("Hand");
+
+            if (activeHand != newActiveHand && activeHand != null)
+            {
+                // Transfer held item to the new hand
+                if (activeHand.childCount > 0)
+                {
+                    Transform heldItem = activeHand.GetChild(0);
+                    heldItem.SetParent(newActiveHand);
+                    heldItem.localPosition = Vector3.zero;
+                    heldItem.localRotation = Quaternion.identity;
+                }
+            }
+
+            activeHand = newActiveHand; // Update the active hand reference
             Debug.Log("Updated active player and hand.");
         }
         else
@@ -89,6 +102,7 @@ public class InventoryManager : MonoBehaviour
             Debug.LogError("No active player found with the Player tag.");
         }
     }
+
 
 
     public void AddItemToGrid(Item item)
@@ -292,52 +306,44 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        if (player == null)
+        if (activeHand == null)
         {
-            Debug.LogError("Player reference is missing! Cannot equip the item.");
+            Debug.LogError("Active hand is not set! Ensure UpdateActivePlayer is called.");
             return;
         }
 
-        // Clear any previous item in the player's hand
-        if (player.handTransform.childCount > 0)
+        // Clear any previous item in the active player's hand
+        foreach (Transform child in activeHand)
         {
-            foreach (Transform child in player.handTransform)
-            {
-                Destroy(child.gameObject);
-            }
+            Destroy(child.gameObject);
         }
 
-        // Instantiate the selected item in the player's hand
-        // GameObject instantiatedItem = Instantiate(selectedItemPrefab, player.handTransform);
-
+        // Instantiate the selected item in the active hand
         GameObject instantiatedItem = Instantiate(selectedItemPrefab, activeHand.position, Quaternion.identity);
         instantiatedItem.transform.SetParent(activeHand);
         instantiatedItem.transform.localPosition = Vector3.zero;
         instantiatedItem.transform.localRotation = Quaternion.identity;
 
-
-
-        // Check if it's a bomb
+        // Additional configuration for specific items (e.g., bombs)
         BombItem bombItem = instantiatedItem.GetComponent<BombItem>();
         if (bombItem != null)
         {
-            // Set bomb's Rigidbody2D to Kinematic when in hand
             Rigidbody2D bombRb = instantiatedItem.GetComponent<Rigidbody2D>();
             if (bombRb != null)
             {
                 bombRb.isKinematic = true;
             }
 
-            // Disable bomb's collider while in hand to avoid interaction with player
             Collider2D bombCollider = instantiatedItem.GetComponent<Collider2D>();
             if (bombCollider != null)
             {
-                bombCollider.enabled = false;  // Disable collider while in hand
+                bombCollider.enabled = false; // Disable collider while in hand
             }
         }
 
-        Debug.Log("Item equipped in player's hand: " + instantiatedItem.name);
+        Debug.Log("Item equipped in active player's hand: " + instantiatedItem.name);
     }
+
 
 
     public void RemoveItem(Item item)

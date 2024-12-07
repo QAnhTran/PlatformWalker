@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class StartButton : MonoBehaviour
 {
-    public void StartGame()
+public string targetSceneName = "Level 1"; 
+
+    public void LoadTargetScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(targetSceneName); 
     }
 }

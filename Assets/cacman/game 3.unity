@@ -2135,8 +2135,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 299364128}
-        m_TargetAssemblyTypeName: ButtonStart, Assembly-CSharp
-        m_MethodName: LoadTargetScene
+        m_TargetAssemblyTypeName: ReturnToMenu, Assembly-CSharp
+        m_MethodName: Return
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2193,10 +2193,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 299364122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 434ee84fb627de24d90807c1cfa155d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c2a879996a612c4694e4337bd187106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: Start
 --- !u!4 &312649980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8359238774070347891, guid: dea37ae2b07303d4c8fd8bcddaccba07, type: 3}
@@ -2679,10 +2678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: banana
-  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 0}
 --- !u!114 &402273564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3758,6 +3753,7 @@ MonoBehaviour:
   - {fileID: 1677147858}
   - {fileID: 1444680164}
   itemsPerPage: 9
+  activePlayerHand: {fileID: 0}
   inventoryGrid: {fileID: 0}
   inventoryButton: {fileID: 58429996}
   selectedItemPrefab: {fileID: 0}
@@ -3803,10 +3799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: 0}
-  isConsumable: 0
-  itemPrefab: {fileID: 620891022}
 --- !u!1 &624534161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3913,6 +3905,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2002110760}
+  mainCameraOffset: {x: 0, y: 0, z: -10}
+  minimapCameraOffset: {x: 0, y: 10, z: 0}
+  isMainCamera: 0
 --- !u!1 &632369048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5781,10 +5776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: banana
-  itemIcon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 0}
 --- !u!114 &1030828531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5962,10 +5953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 374802477}
 --- !u!4 &1140728270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2010544163414276589, guid: 9c4b3f02d04a84f4297517a84d85f500, type: 3}
@@ -6751,10 +6738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 1344185135}
 --- !u!1 &1346630571
 GameObject:
   m_ObjectHideFlags: 0
@@ -7262,10 +7245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 553947827}
 --- !u!1 &1421061616
 GameObject:
   m_ObjectHideFlags: 0
@@ -7448,10 +7427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 52155305}
 --- !u!1 &1441815689
 GameObject:
   m_ObjectHideFlags: 0
@@ -78963,10 +78938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 331579884}
 --- !u!1 &1579575792
 GameObject:
   m_ObjectHideFlags: 0
@@ -80614,10 +80585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 1839927662}
 --- !u!1 &1851744478 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3788996148229655278, guid: a47c5fcd9216e454d8cc85142530459f, type: 3}
@@ -80635,10 +80602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a122a1f305e53e1418e99e4dde833113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: -4570538037665054336, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-  isConsumable: 0
-  itemPrefab: {fileID: 1851744478}
 --- !u!1001 &1873107303
 PrefabInstance:
   m_ObjectHideFlags: 0
