@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Cherry
+  - Trap
+  - Enemy
+  - Inventory Manager
+  - Bomb
+  - Shield
+  - Terrain
+  - Bullet
+  - Transform
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Enemy HP
+  - Bomb
+  - Player
+  - Trap
+  - Enemy
+  - Transition
+  - Button
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 1419900693
+    locked: 0
+  - name: terrain
+    uniqueID: 69631427
+    locked: 0
+  - name: player
+    uniqueID: 1398856101
+    locked: 0
+  - name: Enemy HP
+    uniqueID: 3808837741
+    locked: 0
+  - name: Transition
+    uniqueID: 390660873
+    locked: 0
