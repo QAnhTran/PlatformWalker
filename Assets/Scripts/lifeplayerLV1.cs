@@ -25,9 +25,8 @@ public class lifeplayerLV1 : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (luongmauhientai > 0)) // Kiểm tra nếu người chơi nhấn phím Space và còn máu
+        if (Input.GetKeyDown(KeyCode.Space) && (luongmauhientai > 0)) 
         {
-            // Trừ lượng máu khi nhảy
             luongmauhientai -= 1;
             thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
             if (luongmauhientai <= 0)
@@ -50,10 +49,10 @@ public class lifeplayerLV1 : MonoBehaviour
             if (isShieldActivated)
             {
                 Debug.Log("Shield protected the player from the trap!");
-                isShieldActivated = false; // Deactivate shield after blocking the trap
+                isShieldActivated = false; 
                 hasShield = false;
             }
-            else if (isAlive) // Make sure Die() only gets called if the player is alive and unprotected
+            else if (isAlive)
             {
                 Debug.Log("Player hit by trap without shield - calling Die()");
                 Die();
@@ -85,7 +84,7 @@ public class lifeplayerLV1 : MonoBehaviour
         {
             hasShield = true;
             Debug.Log("Shield activated!");
-            Destroy(other.gameObject); // Remove the shield item from the scene
+            Destroy(other.gameObject); 
         }
     }
     private void RestartLevel()

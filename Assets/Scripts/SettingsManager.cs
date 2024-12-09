@@ -27,21 +27,21 @@ public class SettingsManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _togglesInitialized = false; // Reset initialization flag
-        FindSettingsToggles(); // Re-fetch toggles
+        _togglesInitialized = false; 
+        FindSettingsToggles(); 
         if (BGMToggle != null && SFXToggle != null)
         {
-            InitializeToggles(); // Reinitialize toggles
+            InitializeToggles(); 
             _togglesInitialized = true;
         }
     }
 
     public void OnSettingsOpened()
     {
-        FindSettingsToggles(); // Always fetch toggles
+        FindSettingsToggles(); 
         if (!_togglesInitialized && BGMToggle != null && SFXToggle != null)
         {
-            InitializeToggles(); // Initialize toggle listeners and states
+            InitializeToggles(); 
             _togglesInitialized = true;
         }
     }

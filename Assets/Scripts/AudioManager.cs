@@ -15,7 +15,6 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Subscribe to scene load event
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -31,7 +30,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindAudioSources(); // Dynamically find new audio sources in the scene
+        FindAudioSources(); 
     }
 
     private void FindAudioSources()
@@ -50,7 +49,6 @@ public class AudioManager : MonoBehaviour
 
     public void Initialize()
     {
-        // Apply saved preferences to the audio sources
         SetBGMEnabled(PlayerPrefs.GetInt("BGMEnabled", 1) == 1);
         SetSFXEnabled(PlayerPrefs.GetInt("SFXEnabled", 1) == 1);
     }
@@ -83,7 +81,6 @@ public class AudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the scene load event
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

@@ -9,12 +9,12 @@ public class BombItem : MonoBehaviour
     public GameObject explosionEffect;
     public LayerMask targetLayers;
     public Entity enemy;
-    public int maxUses = 3;  // Set the maximum number of uses
+    public int maxUses = 3;  
     public int usesLeft;
 
     private void Start()
     {
-        usesLeft = maxUses;  // Initialize with the maximum uses
+        usesLeft = maxUses;  
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -36,11 +36,10 @@ public class BombItem : MonoBehaviour
 
         foreach (Collider2D nearbyObject in objectsToDamage)
         {
-            // Check if the object has the tag "Trap" and destroy it
             if (nearbyObject.CompareTag("Trap"))
             {
                 Debug.Log("Trap hit by explosion");
-                Destroy(nearbyObject.gameObject);  // Destroy the trap object
+                Destroy(nearbyObject.gameObject); 
             }
 
             if (nearbyObject.CompareTag("Enemy"))
@@ -66,7 +65,6 @@ public class BombItem : MonoBehaviour
         {
             usesLeft--;
             Debug.Log("Bomb used. Uses left: " + usesLeft);
-            // Implement your bomb-throwing logic here
         }
         else
         {
@@ -74,8 +72,6 @@ public class BombItem : MonoBehaviour
         }
     }
 
-
-    // Function to destroy tiles within the explosion radius
     private void DestroyTiles(Tilemap tilemap, Vector3 explosionPosition)
     {
         // Convert explosion position from world space to cell (grid) position
@@ -89,7 +85,6 @@ public class BombItem : MonoBehaviour
             {
                 Vector3Int currentCell = new Vector3Int(cellPosition.x + x, cellPosition.y + y, cellPosition.z);
 
-                // Check if there is a tile at the current position
                 if (tilemap.HasTile(currentCell))
                 {
                     // Destroy or replace the tile
@@ -100,7 +95,7 @@ public class BombItem : MonoBehaviour
         }
     }
 
-    // Optional: To visualize the explosion radius in the editor
+    // visualize the explosion radius in the editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

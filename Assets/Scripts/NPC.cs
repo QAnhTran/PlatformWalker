@@ -12,14 +12,13 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        HideDialoguePanel(); // Ẩn Dialogue Panel khi bắt đầu
+        HideDialoguePanel();
     }
 
     void Update()
     {
         if (playerIsClose)
         {
-            // Tự động hiển thị Dialogue Panel và bắt đầu hiển thị văn bản khi Player đến gần NPC
             dialoguePanel.SetActive(true);
         }
         else
@@ -50,7 +49,7 @@ public class NPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerIsClose = false;
-            HideDialoguePanel(); // Hide Dialogue Panel when the player leaves
+            HideDialoguePanel(); 
         }
     }
 }

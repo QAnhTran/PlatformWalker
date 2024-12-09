@@ -12,10 +12,10 @@ public class PlayerLife : MonoBehaviour
     private Animator anim;
     [SerializeField] AudioSource SoundDeathEffect;
 
-    private float damageRate = 1.0f; // Mức độ mất máu mỗi giây
-    private bool isAlive = true; // Biến kiểm tra xem nhân vật còn sống hay không
+    private float damageRate = 1.0f; 
+    private bool isAlive = true;
 
-    public bool hasShield = false; // Indicates if the player has shield protection
+    public bool hasShield = false; 
 
     private void Start()
     {
@@ -48,9 +48,9 @@ public class PlayerLife : MonoBehaviour
             if (hasShield)
             {
                 Debug.Log("Shield protected the player from the trap!");
-                hasShield = false; // Deactivate shield after blocking the trap
+                hasShield = false; 
             }
-            else if (isAlive) // Make sure Die() only gets called if the player is alive and unprotected
+            else if (isAlive) 
             {
                 Debug.Log("Player hit by trap without shield - calling Die()");
                 Die();
@@ -74,7 +74,7 @@ public class PlayerLife : MonoBehaviour
         {
             hasShield = true;
             Debug.Log("Shield activated!");
-            Destroy(other.gameObject); // Remove the shield item from the scene
+            Destroy(other.gameObject); 
         }
     }
 

@@ -5,7 +5,7 @@ public class EnemyShoot : MonoBehaviour
     public GameObject bullet;       
     public Transform bulletPos;      
 
-    private float timer;             // Tracks cooldown between shots
+    private float timer;            
 
     public void FireBullets()
     {

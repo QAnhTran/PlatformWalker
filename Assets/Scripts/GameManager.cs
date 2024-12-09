@@ -44,18 +44,4 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
-
-    private void SetCameraFollow(GameObject player)
-    {
-        Cameracontroller cameraFollow = Camera.main.GetComponent<Cameracontroller>();
-        if (cameraFollow != null)
-        {
-            Debug.Log("Camera follow set to player");
-         //   cameraFollow.Player = player.transform;
-        }
-        else
-        {
-            Debug.LogError("CameraFollowPlayer script not found on the Main Camera.");
-        }
-    }
 }

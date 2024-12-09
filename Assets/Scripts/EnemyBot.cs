@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class EnemyBot : MonoBehaviour
 {
-    public enum EnemyType { Melee, Ranged } // Define the types of enemies
-    public EnemyType enemyType;            // Set this in the Inspector to choose the type
+    public enum EnemyType { Melee, Ranged } 
+    public EnemyType enemyType;            
 
-    public float detectionRange = 10f;     // Range at which the enemy detects the player
-    public float attackRange = 2f;         // Range at which melee attacks are performed
-    public float moveSpeed = 2f;           // Movement speed
-    public float attackCooldown = 2.0f;    // Cooldown time between attacks
-    public EnemyShoot enemyShoot;          // Script for ranged enemies to shoot bullets (only used for Ranged type)
+    public float detectionRange = 10f;     
+    public float attackRange = 2f;        
+    public float moveSpeed = 2f;           
+    public float attackCooldown = 2.0f;    
+    public EnemyShoot enemyShoot;          
     private float lastAttackTime = 0f;
 
     private Transform player;
 
     void Start()
     {
-        // Find the player by tag
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -59,16 +58,9 @@ public class EnemyBot : MonoBehaviour
         }
     }
 
-    void MeleeAttack()
-    {
-        Debug.Log("Performing a melee attack on the player!");
-        // Add melee attack logic here (e.g., reducing player's health on contact)
-    }
-
     void RangedAttack()
     {
         Debug.Log("Performing a ranged attack on the player!");
-        // Trigger the shooting behavior
         enemyShoot.GetComponent<EnemyShoot>().FireBullets();
         FollowPlayer();
     }

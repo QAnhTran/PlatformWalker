@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemSlotPrefab;
     public GameObject[] inventorySlots;
     public int itemsPerPage = 9;
-    public Transform activePlayerHand; // Reference to the active player's hand
+    public Transform activePlayerHand; 
     public Transform inventoryGrid;
     private Transform activeHand;
     public Button inventoryButton;
@@ -51,25 +51,20 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        // Check if Q key is pressed
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            // Call the ThrowBomb method when Q is pressed
             ThrowBomb();
         }
     }
 
     public void DisplayPage(int page)
     {
-        ClearInventoryUI();  // Clear existing items in the grid
-
-        // Populate the grid with new items
         int startIndex = page * itemsPerPage;
         for (int i = startIndex; i < startIndex + itemsPerPage; i++)
         {
             if (i < inventoryItems.Count)
             {
-                AddItemToGrid(inventoryItems[i]);  // Custom method to add items to the grid
+                AddItemToGrid(inventoryItems[i]); 
             }
         }
     }
@@ -129,7 +124,7 @@ public class InventoryManager : MonoBehaviour
                     GameObject bombInstance = Instantiate(selectedItemPrefab, hand.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
 
                     // Instantiate the bomb and apply throwing logic
-                    //GameObject bombInstance = Instantiate(selectedItemPrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
+
                     Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
 
                     if (bombRb != null)
@@ -144,7 +139,6 @@ public class InventoryManager : MonoBehaviour
                         Vector2 throwDirection = new Vector2(1f, 0.5f);
                         bombRb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
 
-                        // Decrement bomb use
                         bombItem.usesLeft--;
                         Debug.Log("Bomb thrown! Uses left: " + bombItem.usesLeft);
                         if (bombItem.usesLeft <= 0)
@@ -181,8 +175,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
-
     public void AddItem(Item newItem)
     {
         Debug.Log("AddItem called for: " + newItem.name);
@@ -195,7 +187,6 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log("Adding item: " + newItem.name);
 
-        // Instantiate the prefab
         GameObject itemSlot = Instantiate(itemSlotPrefab, inventoryGrid);
 
         if (itemSlot == null)
@@ -204,7 +195,6 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        // Find the Icon child
         Transform iconTransform = itemSlot.transform.Find("Item Icon");
         if (iconTransform == null)
         {
@@ -212,7 +202,6 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        // Find the name child
         Transform nameTransform = itemSlot.transform.Find("Item Name");
         if (nameTransform == null)
         {
@@ -220,7 +209,6 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        // Set the image and name
         Image iconImage = itemSlot.transform.Find("Item Icon").GetComponent<Image>();
         Text itemName = itemSlot.transform.Find("Item Name").GetComponent<Text>();
 
@@ -230,7 +218,6 @@ public class InventoryManager : MonoBehaviour
         if (itemName != null)
             itemName.text = newItem.name;
 
-        // Add item to inventory
         inventoryItems.Add(newItem);
         DisplayPage(currentPage);
     }
@@ -356,14 +343,6 @@ public class InventoryManager : MonoBehaviour
                 slotImage.sprite = null;
                 break;
             }
-        }
-    }
-
-    void ClearInventoryUI()
-    {
-        foreach (Transform child in inventoryGrid)
-        {
-            // Destroy(child.gameObject);
         }
     }
 

@@ -15,17 +15,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-
-        // Instantiate the health bar and set its parent to the canvas
         GameObject canvas = GameObject.Find("Canvas");
-     //   GameObject healthBarObject = Instantiate(healthBarPrefab, canvas.transform);
-
-        // Position the health bar relative to the enemy
-      //  healthBarObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // Adjust the offset as needed
-
-        // Get the HealthBar component
-    //    healthBar = healthBarObject.GetComponent<HealthBar>();
-    //    healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -40,7 +30,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-       // healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -61,8 +50,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Assume player deals damage on collision
-            TakeDamage(10); // Adjust damage value as needed
+            TakeDamage(10); 
         }
     }
 

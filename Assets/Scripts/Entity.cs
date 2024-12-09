@@ -33,21 +33,17 @@ public class Entity : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D collision)
 {
-    // Kiểm tra nếu va chạm với tag "Bullet"
     if (collision.gameObject.CompareTag("Bullet"))
     {
         TakeDamage(10);
     }
 
-    // Kiểm tra nếu va chạm với tag "Player" và Transform có tên cụ thể
     if (collision.gameObject.CompareTag("Player") && collision.transform.name == "Transform")
     {
-        // Không nhận damage
         Debug.Log("Collided with Player and Specific Transform, no damage taken.");
         return;
     }
 
-    // Kiểm tra nếu chỉ va chạm với tag "Player"
     if (collision.gameObject.CompareTag("Player"))
     {
         TakeDamage(20);

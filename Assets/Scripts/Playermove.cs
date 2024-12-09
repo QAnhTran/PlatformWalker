@@ -17,10 +17,10 @@ public class PlayerMove : MonoBehaviour
     private float dirX = 0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private float doubleJumpForce = 7f; // Add double jump force
+    [SerializeField] private float doubleJumpForce = 7f; 
 
-    private bool canDoubleJump = false; // Track if double jump is allowed
-    private bool isDoubleJumping = false; // Track if double jump is in progress
+    private bool canDoubleJump = false; 
+    private bool isDoubleJumping = false; 
 
     private int atkDamage = 10;
 
@@ -40,12 +40,6 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.LogError("Player hand transform is not assigned!");
         }
-
-        Cameracontroller cameracontroller = Camera.main.GetComponent<Cameracontroller>();
-        if (cameracontroller != null)
-        {
-            //cameracontroller.Player = transform;
-        }
     }
 
     private void Update()
@@ -64,7 +58,7 @@ public class PlayerMove : MonoBehaviour
                 canDoubleJump = true;
                 isDoubleJumping = false;
             }
-            else if (canDoubleJump) // Check if double jump is allowed
+            else if (canDoubleJump)
             {
                 Jump(doubleJumpForce);
                 canDoubleJump = false;
@@ -78,12 +72,6 @@ public class PlayerMove : MonoBehaviour
 
 
         UpdateAnimationState();
-
-    /*    if (Input.GetKeyDown(KeyCode.E))  // 'E' for "use" item
-        {
-            UseEquippedItem();
-        }
-*/
     }
 
     void HandleMovement()
@@ -120,7 +108,6 @@ public class PlayerMove : MonoBehaviour
             state = MovementState.falling;
         }
 
-        // Check if double jumping to set animation accordingly
         if (isDoubleJumping)
         {
             state = MovementState.jumping;
@@ -151,32 +138,4 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-/*
-    public void EquipItem(InventoryItem item)
-    {
-        if (equippedItem != null)
-        {
-            Destroy(equippedItem);
-        }
-
-        // Instantiate the new item in the player's hand
-        equippedItem = Instantiate(item.gameObject, handTransform.position, Quaternion.identity, handTransform);
-
-        // Adjust item's transform or any other properties if needed
-        equippedItem.transform.localPosition = Vector3.zero;
-    }
-
-    public void UseEquippedItem()
-    {
-        if (equippedItem != null)
-        {
-            InventoryItem itemComponent = equippedItem.GetComponent<InventoryItem>();
-
-            if (itemComponent != null)
-            {
-                itemComponent.UseItem();
-            }
-        } 
-    } 
-    */
 }
