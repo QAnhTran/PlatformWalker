@@ -29,7 +29,7 @@ public class ItemCollector : MonoBehaviour
         {
             CollectItem("Cherry", itemIcon, cherryPrefab);
             cherries++;
-            cherriesText.text = "Cherries: " + cherries;
+            cherriesText.text = "" + cherries;
             Destroy(collision.gameObject);
         }
 

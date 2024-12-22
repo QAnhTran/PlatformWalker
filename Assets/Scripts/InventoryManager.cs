@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemSlotPrefab;
     public GameObject[] inventorySlots;
     public int itemsPerPage = 9;
-    public Transform activePlayerHand; 
+    public Transform activePlayerHand;
     public Transform inventoryGrid;
     private Transform activeHand;
     public Button inventoryButton;
@@ -64,7 +64,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (i < inventoryItems.Count)
             {
-                AddItemToGrid(inventoryItems[i]); 
+                AddItemToGrid(inventoryItems[i]);
             }
         }
     }
@@ -110,23 +110,19 @@ public class InventoryManager : MonoBehaviour
 
     public void ThrowBomb()
     {
-        if (selectedItemPrefab != null)
+        if (selectedItem != null && selectedItem.prefab != null)
         {
-            BombItem bombItem = selectedItemPrefab.GetComponent<BombItem>();
+            BombItem bombItem = selectedItem.prefab.GetComponent<BombItem>();
 
             if (bombItem != null)
             {
-                if (bombItem.usesLeft > 0)
+                if (selectedItem.usesLeft > 0)
                 {
-
-
+                    // Instantiate and throw the bomb
                     Transform hand = InventoryManager.Instance.GetActiveHand();
-                    GameObject bombInstance = Instantiate(selectedItemPrefab, hand.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
-
-                    // Instantiate the bomb and apply throwing logic
+                    GameObject bombInstance = Instantiate(selectedItem.prefab, hand.position + new Vector3(1, 0, 0), Quaternion.identity);
 
                     Rigidbody2D bombRb = bombInstance.GetComponent<Rigidbody2D>();
-
                     if (bombRb != null)
                     {
                         bombRb.isKinematic = false;
@@ -139,11 +135,13 @@ public class InventoryManager : MonoBehaviour
                         Vector2 throwDirection = new Vector2(1f, 0.5f);
                         bombRb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
 
-                        bombItem.usesLeft--;
-                        Debug.Log("Bomb thrown! Uses left: " + bombItem.usesLeft);
-                        if (bombItem.usesLeft <= 0)
+                        selectedItem.usesLeft--;
+                        Debug.Log("Bomb thrown! Uses left: " + selectedItem.usesLeft);
+
+                        if (selectedItem.usesLeft <= 0)
                         {
                             Debug.Log("Bomb out of uses! Removing from inventory.");
+                            RemoveItem(selectedItem); // Remove from inventory
                             ClearPlayerHand();
                         }
                     }
@@ -163,6 +161,7 @@ public class InventoryManager : MonoBehaviour
             Debug.LogWarning("No bomb selected to throw.");
         }
     }
+
 
     public void ClearPlayerHand()
     {
@@ -251,15 +250,15 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        selectedItemPrefab = item.prefab;
-
-        Debug.Log("Selected item: " + item.name);
+        selectedItem = item; // Use the actual Item object
+        Debug.Log("Selected item: " + selectedItem.name);
 
         if (item.name == "vpBaove Item") // Ensure the item name matches your shield's name
         {
             playerLifeScript.hasShield = true;
         }
     }
+
 
     public void SetActiveHand(Transform hand)
     {
@@ -287,7 +286,7 @@ public class InventoryManager : MonoBehaviour
 
     public void UseSelectedItem()
     {
-        if (selectedItemPrefab == null)
+        if (selectedItem == null)
         {
             Debug.LogError("No item is selected! Cannot use the item.");
             return;
@@ -305,13 +304,15 @@ public class InventoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Instantiate the selected item in the active hand
-        GameObject instantiatedItem = Instantiate(selectedItemPrefab, activeHand.position, Quaternion.identity);
+        // Instantiate the selected item's prefab in the active hand
+        GameObject instantiatedItem = Instantiate(selectedItem.prefab, activeHand.position, Quaternion.identity);
         instantiatedItem.transform.SetParent(activeHand);
         instantiatedItem.transform.localPosition = Vector3.zero;
         instantiatedItem.transform.localRotation = Quaternion.identity;
 
-        // Additional configuration for specific items (e.g., bombs)
+        Debug.Log("Item equipped in active player's hand: " + instantiatedItem.name);
+
+        // Handle item-specific logic (e.g., bombs)
         BombItem bombItem = instantiatedItem.GetComponent<BombItem>();
         if (bombItem != null)
         {
@@ -327,42 +328,35 @@ public class InventoryManager : MonoBehaviour
                 bombCollider.enabled = false; // Disable collider while in hand
             }
         }
-
-        Debug.Log("Item equipped in active player's hand: " + instantiatedItem.name);
     }
-
-
 
     public void RemoveItem(Item item)
     {
-        foreach (GameObject slot in inventorySlots)
+        if (inventoryItems.Contains(item))
         {
-            Image slotImage = slot.transform.GetChild(0).GetComponent<Image>();
-            if (slotImage.sprite == item.icon)
-            {
-                slotImage.sprite = null;
-                break;
-            }
+            inventoryItems.Remove(item);
+            Debug.Log("Removed item: " + item.name);
+            DisplayPage(currentPage);
+        }
+        else
+        {
+            Debug.LogError("Selected item not found in inventory!");
         }
     }
 
-    public void NextPage()
+
+    private void RefreshInventoryUI()
     {
-        if ((currentPage + 1) * itemsPerPage < inventoryItems.Count)
+        // Clear the current inventory UI
+        foreach (Transform child in inventoryGrid)
         {
-            currentPage++;
-            DisplayPage(currentPage);
+            Destroy(child.gameObject);
         }
+
+        // Re-display the items in the current page
+        DisplayPage(currentPage);
     }
 
-    public void PreviousPage()
-    {
-        if (currentPage > 0)
-        {
-            currentPage--;
-            DisplayPage(currentPage);
-        }
-    }
 }
 
 
@@ -373,15 +367,13 @@ public class Item
     public GameObject prefab;
     public int usesLeft;
 
-    public Item(string name, Sprite icon = null, GameObject prefab = null, int uses = 1)
+    public Item(string name, Sprite icon = null, GameObject prefab = null, int uses = 3)
     {
         this.name = name;
         this.icon = icon;
         this.prefab = prefab;
         this.usesLeft = uses;
     }
-
-
 }
 
 

@@ -8,21 +8,23 @@ public class PlayerMove : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
+
     public Transform handTransform;  // The point where items will appear in the player's hand
     private GameObject equippedItem;
 
-
     [SerializeField] private LayerMask jumpableGround;
-
-    private float dirX = 0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private float doubleJumpForce = 7f; 
+    [SerializeField] private float doubleJumpForce = 7f;
+
+    public Animator secondPlayerAnimator; // Animator for the second player
+    private Animator currentAnimator; // Tracks the active player's animator
 
     private bool canDoubleJump = false; 
     private bool isDoubleJumping = false; 
 
     private int atkDamage = 10;
+    private float dirX = 0f;
 
     private enum MovementState { idle, running, jumping, falling, doubleJ }
     private MovementState state = MovementState.idle;
@@ -35,6 +37,7 @@ public class PlayerMove : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        currentAnimator = anim; // Initially, the first player's animator is active
 
         if (handTransform == null)
         {
@@ -45,7 +48,6 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-
 
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
@@ -66,11 +68,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-
-        float move = Input.GetAxis("Horizontal");
-        transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
-
-
         UpdateAnimationState();
     }
 
@@ -79,7 +76,6 @@ public class PlayerMove : MonoBehaviour
         float move = Input.GetAxis("Horizontal");
         transform.Translate(move * moveSpeed * Time.deltaTime, 0, 0);
     }
-
 
     private void UpdateAnimationState()
     {
@@ -113,7 +109,11 @@ public class PlayerMove : MonoBehaviour
             state = MovementState.jumping;
         }
 
-        anim.SetInteger("state", (int)state);
+        // Update the current animator based on the state
+        if (currentAnimator != null)
+        {
+            currentAnimator.SetInteger("state", (int)state);
+        }
     }
 
     private bool IsGrounded()
@@ -125,6 +125,11 @@ public class PlayerMove : MonoBehaviour
     {
         jumpSoundEffect.Play();
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
+    public void SwitchAnimator(Animator newAnimator)
+    {
+        currentAnimator = newAnimator;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

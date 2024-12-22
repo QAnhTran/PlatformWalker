@@ -15,6 +15,7 @@ public class EnemyBot : MonoBehaviour
     private float lastAttackTime = 0f;
 
     private Transform player;
+    private bool isPlayerUndetectable = false; // Flag to check if the player is undetectable
 
     void Start()
     {
@@ -24,14 +25,21 @@ public class EnemyBot : MonoBehaviour
     void Update()
     {
         UpdatePlayerTarget();
+
+        // If the player is undetectable, stop further processing
+        if (isPlayerUndetectable || player == null) 
+        {
+            return;
+        }
+
         // Calculate the distance between the enemy and the player
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
 
         if (distanceToPlayer <= detectionRange)
         {
             // Follow the player if within detection range but outside attack range
             FollowPlayer();
+
             if (enemyType == EnemyType.Ranged)
             {
                 RangedAttack();
@@ -63,6 +71,20 @@ public class EnemyBot : MonoBehaviour
         Debug.Log("Performing a ranged attack on the player!");
         enemyShoot.GetComponent<EnemyShoot>().FireBullets();
         FollowPlayer();
+    }
+
+    public void SetPlayerDetectable(bool state)
+    {
+        isPlayerUndetectable = !state;
+
+        if (isPlayerUndetectable)
+        {
+            Debug.Log("Player is now undetectable to this enemy.");
+        }
+        else
+        {
+            Debug.Log("Player is detectable again.");
+        }
     }
 
     void OnDrawGizmosSelected()
