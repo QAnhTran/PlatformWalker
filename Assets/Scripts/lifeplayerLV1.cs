@@ -6,40 +6,38 @@ using UnityEngine.SceneManagement;
 public class lifeplayerLV1 : MonoBehaviour
 {
     public thanhmau thanhmau;
-    public float luongmauhientai;
-    public float luongmautoida = 10;
+    private Rigidbody2D rb;
+    private Animator anim;
+    [SerializeField] private AudioSource SoundDeathEffect;
     public bool hasShield = false;
     public bool isShieldActivated = false;
     private bool isAlive = true;
-    private Rigidbody2D rb;
-    private Animator anim;
-    [SerializeField] AudioSource SoundDeathEffect;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        luongmauhientai = luongmautoida;
-        thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
+        thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (luongmauhientai > 0)) 
+        if (Input.GetKeyDown(KeyCode.Space) && SharedManaSystem.Instance.HasEnoughMana(1))
         {
-            luongmauhientai -= 1;
-            thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
-            if (luongmauhientai <= 0)
+            SharedManaSystem.Instance.SpendMana(1);
+            thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
+
+            if (SharedManaSystem.Instance.currentMana <= 0)
             {
                 Die();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && hasShield == true) 
+        if (Input.GetKeyDown(KeyCode.E) && hasShield)
         {
             isShieldActivated = true;
             Debug.Log("Shield activated!");
-        } 
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,7 +47,7 @@ public class lifeplayerLV1 : MonoBehaviour
             if (isShieldActivated)
             {
                 Debug.Log("Shield protected the player from the trap!");
-                isShieldActivated = false; 
+                isShieldActivated = false;
                 hasShield = false;
             }
             else if (isAlive)
@@ -60,33 +58,35 @@ public class lifeplayerLV1 : MonoBehaviour
         }
     }
 
-    private void Die()
-    {
-        SoundDeathEffect.Play();
-        rb.bodyType = RigidbodyType2D.Static;
-        anim.SetTrigger("death");
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Cherry"))
+        if (other.CompareTag("Cherry"))
         {
-            luongmauhientai += 10;
-            if (luongmauhientai > luongmautoida)
-            {
-                luongmauhientai = luongmautoida;
-            }
-            thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
+            SharedManaSystem.Instance.RestoreMana(10);
+            thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
             Destroy(other.gameObject);
         }
 
-        if (other.gameObject.CompareTag("Shield"))
+        if (other.CompareTag("Shield"))
         {
             hasShield = true;
-            Debug.Log("Shield activated!");
-            Destroy(other.gameObject); 
+            Debug.Log("Shield collected!");
+            Destroy(other.gameObject);
         }
     }
+
+    private void Die()
+    {
+        if (isAlive)
+        {
+            Debug.Log("Player died!");
+            SoundDeathEffect.Play();
+            rb.bodyType = RigidbodyType2D.Static;
+            anim.SetTrigger("death");
+            isAlive = false;
+        }
+    }
+
     private void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

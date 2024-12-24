@@ -25,6 +25,8 @@ public class CharacterSwitch : MonoBehaviour
             otherCharacter.tag = "Untagged";
 
             UpdateCameraTarget(gameObject.transform);
+            InventoryManager.Instance.SetActiveHand(handTransform);
+
         }
 
         if (transformationText != null)

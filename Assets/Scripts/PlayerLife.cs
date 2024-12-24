@@ -6,35 +6,37 @@ using UnityEngine.SceneManagement;
 public class PlayerLife : MonoBehaviour
 {
     public thanhmau thanhmau;
-    public float luongmauhientai;
-    public float luongmautoida = 10;
     private Rigidbody2D rb;
     private Animator anim;
-    [SerializeField] AudioSource SoundDeathEffect;
+    [SerializeField] private AudioSource SoundDeathEffect;
 
-    private float damageRate = 1.0f; 
     private bool isAlive = true;
+    public bool hasShield = false;
 
-    public bool hasShield = false; 
+    private static bool isDrainingMana = false; // Static flag to ensure only one drain instance
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        luongmauhientai = luongmautoida;
-        thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
+        thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
 
-        InvokeRepeating("TruMauMoiGiay", 1.0f, 1.0f);
+        // Start draining mana only if no other instance is already doing it
+        if (!isDrainingMana)
+        {
+            isDrainingMana = true;
+            InvokeRepeating("TruMauMoiGiay", 1.0f, 1.0f);
+        }
     }
 
     private void TruMauMoiGiay()
     {
         if (isAlive)
         {
-            luongmauhientai -= damageRate;
-            thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
+            SharedManaSystem.Instance.SpendMana(1);
+            thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
 
-            if (luongmauhientai <= 0)
+            if (SharedManaSystem.Instance.currentMana <= 0)
             {
                 Die();
             }
@@ -48,9 +50,9 @@ public class PlayerLife : MonoBehaviour
             if (hasShield)
             {
                 Debug.Log("Shield protected the player from the trap!");
-                hasShield = false; 
+                hasShield = false;
             }
-            else if (isAlive) 
+            else if (isAlive)
             {
                 Debug.Log("Player hit by trap without shield - calling Die()");
                 Die();
@@ -60,21 +62,17 @@ public class PlayerLife : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Cherry"))
+        if (other.CompareTag("Cherry"))
         {
-            luongmauhientai += 10;
-            if (luongmauhientai > luongmautoida)
-            {
-                luongmauhientai = luongmautoida;
-            }
-            thanhmau.capnhatthanhmau(luongmauhientai, luongmautoida);
+            SharedManaSystem.Instance.RestoreMana(10);
+            thanhmau.capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
         }
 
-        if (other.gameObject.CompareTag("Shield"))
+        if (other.CompareTag("Shield"))
         {
             hasShield = true;
-            Debug.Log("Shield activated!");
-            Destroy(other.gameObject); 
+            Debug.Log("Shield collected!");
+            Destroy(other.gameObject);
         }
     }
 
@@ -82,16 +80,22 @@ public class PlayerLife : MonoBehaviour
     {
         if (isAlive)
         {
-            Debug.Log("Die method called - Player is now dead.");
+            Debug.Log("Player died!");
             SoundDeathEffect.Play();
             rb.bodyType = RigidbodyType2D.Static;
             anim.SetTrigger("death");
-            isAlive = false; 
+            isAlive = false;
         }
     }
 
-    private void RestartLevel()
+        private void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnDestroy()
+    {
+        // Stop mana draining when this character is destroyed
+        isDrainingMana = false;
     }
 }

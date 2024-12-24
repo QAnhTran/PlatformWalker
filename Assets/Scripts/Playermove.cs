@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        currentAnimator = anim; // Initially, the first player's animator is active
+        currentAnimator = anim; 
 
         if (handTransform == null)
         {

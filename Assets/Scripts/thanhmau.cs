@@ -3,9 +3,15 @@ using UnityEngine.UI;
 
 public class thanhmau : MonoBehaviour
 {
-    public Image _thanhMau;
-    public void capnhatthanhmau(float luongmauhientai, float luongmautoida)
+    public UnityEngine.UI.Slider manaSlider;
+
+    public void capnhatthanhmau(float currentMana, float maxMana)
     {
-        _thanhMau.fillAmount = luongmauhientai / luongmautoida;
+        manaSlider.value = currentMana / maxMana;
+    }
+
+    private void Update()
+    {
+        capnhatthanhmau(SharedManaSystem.Instance.currentMana, SharedManaSystem.Instance.maxMana);
     }
 }
